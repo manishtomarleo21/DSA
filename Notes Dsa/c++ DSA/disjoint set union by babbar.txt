@@ -1,0 +1,66 @@
+#include <numeric>
+#include <iostream>
+#include <algorithm>
+#include <queue>
+
+
+using namespace std;
+
+void makeSet(vector<int> &parent, vector<int> &rank, int n){
+    for (int i = 0; i < n; i++)
+    {
+        //making parent of their own initially for the independent component
+        parent[i] = i;
+        //put rank of all componentes 0 as well
+        rank[i] = 0; 
+    }
+}
+
+int findParent(vector<int> &parent, int node){
+    //when it menas that it showing it parent itself means we found parent
+    if(parent[node] = node){ //w
+        return node;
+    }
+    //for path compressing we will make all compnents parent in group to the one parent 
+    return parent[node] = findParent(parent, parent[node]);
+}
+
+void unionSet(vector<int> & parent, int u, int v, vector<int> &rank){
+    //to make union we need parent of the groun from which u and v belong if they are not the individual comp
+    
+    u = findParent(parent, u);
+    v = findParent(parent, v);
+
+    //if u group is lower in size then v connect it to v's group and make v is parent as v is showing thr parent
+    if (rank[u]<rank[v])
+    {
+        parent[u] = v;
+    }
+    else if(rank[v]< rank[u]){
+        parent[v] = u;
+    }
+    else{
+        //if both are indiviual componetns then make any one any ones parent just upgrade the rank of which even 
+        // is promoted to the parent
+        parent[v] = u;
+        rank[u]++;
+    }
+    
+}
+
+
+
+
+int main()
+{
+    int n =100;
+
+    vector<int> parent(n);
+    vector<int> rank(n);
+
+    makeSet(parent, rank, n);
+
+
+
+    return 0;
+}

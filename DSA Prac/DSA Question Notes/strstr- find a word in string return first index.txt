@@ -1,0 +1,110 @@
+#include<iostream>
+#include<string>
+
+using namespace std;
+
+int findStr(string str1 , string f){ 
+   
+   int len = str1.length();
+   int lenOfF = f.length();
+   int pos = -1, count = 0;
+   int flag;
+
+   
+
+    for (int i = 0; i < len; i++)
+    {
+        if (str1[i]==f[0])
+        {
+            flag = 0;
+        }
+        
+        for (int j = 0; j < lenOfF; j++)
+        {
+            if (str1[i+j] != f[j])
+            {
+                flag = 1;
+                break;
+            }
+            
+        }
+        if (flag == 0)
+        {
+            return i;
+        }
+
+    } 
+    return -1;   
+}
+
+int main()
+{
+    string str = "GeeksForGeeks"; 
+
+    string x = "For";
+
+    int elem = findStr(str, x);
+    cout<<elem<<endl;
+   
+
+    return 0;
+}
+//My mathod..
+
+#include<iostream>
+#include<string>
+
+using namespace std;
+
+int findStr(string str1, string f1){
+    int len = str1.length();
+    int lenWord = f1.length();
+
+    int pos = -1, count = 0, i =0;
+
+    while (i <= len)
+    {
+        if (str1[i] == f1[0])
+        {
+            pos = i;
+            for (int j = 0; j < lenWord; j++)
+            {
+                if (str1[i] == f1[j])
+                {
+                    count++;
+                    i++;
+                }
+            }
+                if (count == lenWord)
+                {
+                    return pos;                    
+                }
+                else{
+                    count = 0;
+                    pos = -1;
+
+                }
+
+            
+        }
+
+        i++;
+    }
+    return -1;
+    
+}
+
+int main()
+{
+    
+    string str = "GeeksForGeeks"; 
+
+    string x = "For";
+
+
+    int ind = findStr(str, x);
+    cout<<ind<<endl;
+
+    return 0;
+}
+

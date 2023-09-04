@@ -1,0 +1,43 @@
+#include <set>
+#include <iostream>
+#include <algorithm>
+#include <bits/stdc++.h>
+#include <stack>
+#include <cstring>
+#include <string>
+
+using namespace std;
+
+//we write our custom cmp function which compare tow strings numbers according to length 
+//big sorting
+
+bool cmp(string a, string b){
+
+  if(a.length()!=b.length()){
+    return a.length()<b.length();
+  }else{
+    return a<b;
+  }
+
+}
+
+vector<string> bigSorting(vector<string> unsorted) {
+   
+    sort(unsorted.begin(), unsorted.end(), cmp);
+    return unsorted;
+
+}
+
+
+int main()
+{
+
+  int n = 15;
+  vector<string> vec = {"1", "200", "150", "3"};
+
+  vector<string> vec2 = bigSorting(vec);
+  
+  for(string x : vec2) cout<<x<<" ";
+
+  return 0;
+}

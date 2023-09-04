@@ -1,0 +1,50 @@
+#include<stdio.h>
+#include<stdlib.h>
+//To reprssnt a graph in code we use matrix or list we have seen already 
+//We are doing by the matrix here and see a dfs traversal
+//Depth first search
+
+//DFS Implementation
+    //Basically DFS use stack mathod to traversal as we do not have to write the code for the stack
+    //as the function works bydefault as stacks u know last is first out method(LIFO)
+
+    
+
+    //This is Adjacency Matrix 7 by 7 representation for the graph the node which is connected mark by the 1
+    //the one are not marked by the 0
+
+int visited[7] = {0,0,0,0,0,0,0};
+//Adjacency Matrix 7 by 7
+
+//We made it globale so we can use it another functions as well
+int a[7][7] = {
+    
+    {0,1,1,1,0,0,0}, //0
+    {1,0,0,1,0,0,0}, //1
+    {1,0,0,1,1,0,0}, //2
+    {0,1,1,0,1,0,0}, //3
+    {0,0,1,1,0,1,1}, //4
+    {0,0,0,0,1,0,0}, //5
+    {0,0,0,0,1,0,0}  //6
+};
+
+void DFS(int i){
+    printf("%d ", i);
+    visited[i] = 1;
+    for ( int j = 0; j < 7; j++)
+    {
+        if (a[i][j]==1 && !visited[j])
+        {
+            DFS(j);
+        }
+        
+    }
+    
+}
+
+int main()
+{
+    DFS(2);
+  
+    return 0;
+}

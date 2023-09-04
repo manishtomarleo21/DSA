@@ -1,0 +1,53 @@
+#include <set>
+#include <iostream>
+#include <algorithm>
+#include <bits/stdc++.h>
+#include <stack>
+#include <cstring>
+#include <string>
+
+..//not an insertion sort
+
+using namespace std;
+
+void insertionSort(vector<int> arr, vector<int> brr) { //small big
+ 
+map<int, pair<int, int>> ump;
+ vector<int> ans;
+
+ for (int i = 0; i < brr.size(); i++)
+ {
+    ump[brr[i]].first++;
+ }
+ 
+ for (int i = 0; i < arr.size(); i++)
+ {
+    ump[arr[i]].second++;
+ }
+
+ for(auto const& count: ump){
+   if(count.second.first != count.second.second){
+      ans.push_back(count.first);
+      cout<<count.first<<" ";
+   }
+ }
+
+
+ 
+  
+}
+
+
+int main()
+{
+
+  vector<int> arr = {11, 4, 11, 7, 13, 4, 12, 11, 10, 14};
+  vector<int> brr = {11, 4, 11, 7, 3, 7, 10, 13, 4, 8, 12, 11, 10, 14, 12};
+  
+  
+  insertionSort(arr, brr);
+ 
+
+
+  return 0;
+}

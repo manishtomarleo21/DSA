@@ -1,0 +1,92 @@
+#include<iostream>
+#include<vector>
+#include<stack>
+
+using namespace std;
+
+//Next smaller number element from left to right but this one is savinf the the values for index check below
+
+vector<int> NSE(vector<int> vec, int n){
+    vector<int>ans(n);
+    stack<int> st;
+    st.push(-1);
+
+   for (int i = n-1; i >= 0 ; i--)
+   {
+        int curr = vec[i];
+        while (curr<=st.top())
+        {
+            st.pop();
+        }
+        ans[i] = st.top();
+        st.push(curr);
+        
+   }
+   return ans;
+      
+}
+
+int main()
+{
+    vector<int> v = {2,1,4,3};
+    int n = v.size();
+
+
+    vector<int> nse = NSE(v, n);
+
+    for (int i = 0; i < n; i++)
+    {
+        cout<<v[i]<<" "<<nse[i]<<endl; //nge[i] gonna give index so -1 its not index so -1 comes
+        //we will use turnary operator to say if -1 comes print -1;
+    }
+    
+
+    return 0;
+}
+
+______________________________________________________________________________________________________________________
+with index
+
+#include <iostream>
+#include <vector>
+#include <stack>
+
+using namespace std;
+
+// Next greater element with the stack
+
+vector<int> NSE(vector<int> vec, int n)
+{
+    vector<int> ans(n);
+    stack<int> st;
+    st.push(-1);
+
+    for (int i = n - 1; i >= 0; i--)
+    {
+        int curr = vec[i];
+        while (st.top() != -1 && curr <= vec[st.top()])
+        {
+            st.pop();
+        }
+        ans[i] = st.top();
+        st.push(i);
+    }
+    return ans;
+}
+
+int main()
+{
+    vector<int> v = {2, 1, 4, 3};
+    int n = v.size();
+
+    vector<int> nse = NSE(v, n);
+
+    for (int i = 0; i < n; i++)
+    {
+        cout << v[i] << " " <<(nse[i]==-1?-1:v[nse[i]]) << endl; // nge[i] gonna give index so -1 its not index so -1 comes
+        // we will use turnary operator to say if -1 comes print -1;
+    }
+
+    return 0;
+}
+

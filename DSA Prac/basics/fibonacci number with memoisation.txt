@@ -1,0 +1,44 @@
+#include <set>
+#include <iostream>
+#include <algorithm>
+#include <bits/stdc++.h>
+#include <stack>
+#include <cstring>
+#include <string>
+
+ using namespace std;
+
+    vector<int> vec(1000, 0);
+
+int fib(int n){
+    if(n<= 1){
+        return n;
+    }
+
+    if(vec[n]!=0){
+        return vec[n];
+    }
+    
+    vec[n] = fib(n-2)+fib(n-1);
+    return vec[n];
+}
+
+int main()
+{
+    // vector <int> a = {-1,1,1,1,2,1};
+   
+    cout<<fib(7)<<endl;
+
+   
+    
+   
+    
+    
+
+
+    
+  
+    
+
+    return 0;
+}

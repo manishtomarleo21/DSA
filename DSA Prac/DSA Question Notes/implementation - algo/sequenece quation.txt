@@ -1,0 +1,39 @@
+#include <set>
+#include <iostream>
+#include <algorithm>
+#include <bits/stdc++.h>
+#include <queue>
+
+
+using namespace std;
+// {5, 2, 1, 3, 4};
+//this question is basically find the index 1 is where suppose 1 is at 3rd index where index starting from 1 index
+// then look at 3rd index is 1 so now find where which index is 3 is now it is at 4 index this will be the result
+//vec[vec[i]
+
+
+int main()
+{
+  // vector<int> vec = {5, 2, 1, 3, 4};
+  vector<int> vec = {2, 3, 1};
+  vector<int> temp;
+  int x = 1;
+  while (x<=vec.size())
+  {
+    auto it = find(vec.begin(), vec.end(), x); //used interator to find the index
+    int index = it - vec.begin(); //
+    auto it1 = find(vec.begin(), vec.end(), index+1);
+    int val = it1 - vec.begin();
+    temp.push_back(val+1);
+    x++;
+  }
+  
+  for(int x: temp) cout<<x<<" ";
+
+
+
+
+ 
+
+    return 0;
+}

@@ -1,0 +1,29 @@
+#include <iostream>
+#include <vector>
+#include <string>
+using namespace std;
+
+int factorial(int n){
+    if(n==0) return 1;
+    int factorial = 1;
+    for (int i = 2; i <= n ; i++)
+    {
+        factorial*=i;
+    }
+    return factorial;
+}
+
+//for combination formula is nCr = (n!) / (r! * (n-r)!)
+int nCr(int n, int r){
+    return factorial(n)/(factorial(r)*factorial(n-r));
+}
+
+int main() {
+  
+    int n = 2, r = 2;
+
+    int comb = nCr(n, r);
+    cout<<comb<<endl;
+
+    return 0;
+}

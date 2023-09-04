@@ -1,0 +1,103 @@
+#include<iostream>
+#include<ostream>
+#include <sstream>
+#include<string>
+
+using namespace std;
+
+class Box
+{
+    int l, b, h;
+    public:
+        Box(){ //default constructor
+            l = 0;
+            b = 0;
+            h = 0;
+
+        }
+        Box(int lenght, int breadth, int height){ //Parameterized constructor
+            l = lenght;
+            b = breadth;
+            h = height;
+        }
+        Box(Box& B){ //copy constructor
+            l = B.l;
+            b = B.b;
+            h = B.h;
+
+        }
+
+        int getLength(){
+            return l;
+        }
+        int getBreadth(){
+            return b;
+        }
+        int getHeight(){
+            return h;
+        }
+
+        long long CalculateVolume(){
+            return l*b*h; //box volume formula
+        }
+
+        friend bool operator < (Box &b1, Box &b2){
+            if ((b1.l < b2.l) || (b1.l == b2.l && b1.b < b2.b) ||
+               (b1.l == b2.l && b1.b == b2.b && b1.h <b2.h))
+            {
+                return true;
+            }else
+            {
+                return false;
+            }
+  
+        }
+        friend ostream& operator<<(ostream &o, Box &bb){
+            char c = ' ';
+            return o<<bb.l<<c<<bb.b<<c<<bb.h;
+        }
+
+
+
+};
+
+int main()
+{
+   Box b1;
+   Box b2(2, 3, 4);
+   Box b3 = b2; //The way to set copy constructor
+
+   b2.CalculateVolume();
+   cout<<b2.CalculateVolume()<<endl;
+   cout<<b2;
+   
+
+    return 0;
+}
+
+//Condtions for questions
+
+#include<bits/stdc++.h>
+
+using namespace std;
+//Implement the class Box  
+//l,b,h are integers representing the dimensions of the box
+
+// The class should have the following functions : 
+
+// Constructors: 
+// Box();
+// Box(int,int,int);
+// Box(Box);
+
+
+// int getLength(); // Return box's length
+// int getBreadth (); // Return box's breadth
+// int getHeight ();  //Return box's height
+// long long CalculateVolume(); // Return the volume of the box
+
+//Overload operator < as specified
+//bool operator<(Box& b)
+
+//Overload operator << as specified
+//ostream& operator<<(ostream& out, Box& B)

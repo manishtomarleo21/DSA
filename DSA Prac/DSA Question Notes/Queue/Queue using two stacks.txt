@@ -1,0 +1,156 @@
+class Queue
+{
+    stack<int> st1, st2;
+
+public:
+
+    void shiftElements(){
+        while (!st1.empty())
+            {
+                st2.push(st1.top());
+                st1.pop();
+            }
+    }
+
+    void enqueue(int data)
+    {
+        st1.push(data);
+    }
+    void dequeue()
+    {
+        if (st2.empty())
+        {
+            shiftElements();
+        }
+        st2.pop();
+       
+    }
+    void printElem()
+    {
+       if (st2.empty())
+        {
+            shiftElements();
+        }
+        cout << st2.top() << endl;
+     
+    }
+};
+
+int main()
+{
+    Queue Q;
+    int queries, q, num;
+    cin >> queries;
+
+    while (queries--)
+    {
+        cin >> q;
+        if (q == 1)
+        {
+            cin >> num;
+            Q.enqueue(num);
+
+        }
+        else if (q==2)
+        {
+           Q.dequeue();
+        }
+        else{
+            Q.printElem();
+        }
+        
+    }
+
+    return 0;
+}
+__________________________________________________________
+#include <cmath>
+#include <cstdio>
+#include <vector>
+#include <iostream>
+#include <algorithm>
+#include <stack>
+using namespace std;
+
+void shiftElement(stack<int> &st1, stack<int> &st2){
+    while (!st1.empty())
+    {
+        st2.push(st1.top());
+        st1.pop();
+    }
+    
+}
+
+int main()
+{
+    /* Enter your code here. Read input from STDIN. Print output to STDOUT */
+
+    stack<int> st1;
+    stack<int> st2;
+
+    int queries, q, num;
+    cin >> queries;
+
+    while (queries--)
+    {
+        cin >> q;
+        if (q == 1)
+        {
+            cin >> num;
+            st1.push(num);
+
+        }
+        else if (q==2)
+        {
+           if(st2.empty()){
+                shiftElement(st1, st2);
+           }
+           st2.pop();
+        }
+        else{
+            if(st2.empty()){
+                shiftElement(st1, st2);
+           }
+           cout<<st2.top();
+        }
+        
+    }
+
+    return 0;
+}
+
+/*
+10      q = 10 (number of queries)
+1 42    1st query, enqueue 42
+2       dequeue front element
+1 14    enqueue 42
+3       print the front element
+1 28    enqueue 28
+3       print the front element
+1 60    enqueue 60
+1 78    enqueue 78
+2       dequeue front element
+2       dequeue front element
+
+*/
+
+
+
+
+
+/*
+10      q = 10 (number of queries)
+1 42    1st query, enqueue 42
+2       dequeue front element
+1 14    enqueue 42
+3       print the front element
+1 28    enqueue 28
+3       print the front element
+1 60    enqueue 60
+1 78    enqueue 78
+2       dequeue front element
+2       dequeue front element
+
+*/
+
+

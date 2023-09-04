@@ -1,0 +1,48 @@
+#include<stdio.h>
+#include<stdlib.h>
+
+//This is the abstract data types which is made of by primitive data types such as int char float
+//ADT
+
+struct myArray
+{
+    int total_size;
+    int used_size;
+    int *ptr;
+};
+
+void createArrays(struct myArray *a, int tsize, int usize){
+    (*a).total_size = tsize;
+    (*a).used_size = usize;
+    a->ptr = (int *) malloc(tsize*sizeof(int)); //This will point the memory in heap 
+
+}
+
+
+void setVal(struct myArray * a)
+{
+    int n;
+    for (int i = 0; i < a->used_size; i++)
+    {
+        printf("Enter the number the index at %d\n", i);
+        scanf("%d\n", &n);
+        (a->ptr)[i] = n;
+    }
+    
+}
+void show(struct myArray *a ){
+    for(int i = 0; i<a->used_size; i++)
+    {
+        printf("The value at index %d is %d\n", i, (a->ptr)[i]);
+    }
+}
+
+
+int main()
+{
+    struct myArray marks;
+    createArrays(&marks, 10, 5);
+    setVal(&marks);
+    show(&marks);
+    return 0;
+}

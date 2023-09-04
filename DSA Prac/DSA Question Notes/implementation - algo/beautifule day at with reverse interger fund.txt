@@ -1,0 +1,48 @@
+#include <set>
+#include <iostream>
+#include <algorithm>
+#include <bits/stdc++.h>
+#include <queue>
+
+
+using namespace std;
+
+int reverseDigit(int num){
+
+  int rev_num = 0;
+
+  while (num > 0){
+    rev_num = rev_num*10 + num%10;
+    num /= 10;
+  }
+  
+  return rev_num;
+  
+}
+
+
+ 
+
+
+int main()
+{
+  // vector<int> vec = {-1, -3, 4, 2};
+  int n = 20;
+  int e = 23;
+  int k = 6;
+  int beautifulDay = 0;
+
+  while (n<=23)
+  {
+    int remain = n - reverseDigit(n);
+    if(abs(remain)%k==0){
+      beautifulDay++;
+    }
+    n++;
+  }
+
+  cout<<beautifulDay<<endl;
+  
+
+    return 0;
+}

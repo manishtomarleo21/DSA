@@ -1,0 +1,122 @@
+#include<stdio.h>
+#include<stdlib.h>
+
+struct Stack
+{
+    int size; // max size of the array
+    int top; //top points at the index of the array
+    int *arr; //array pointer
+};
+
+int isEmpty(struct Stack * ptr){
+    if (ptr->top ==-1)
+    {
+        return 1;
+    }
+    return 0;
+}
+
+int isFull(struct Stack * ptr){
+    if (ptr->top == ptr->size-1)
+    {
+        return 1;
+    }
+    return 0;
+    
+}
+
+void push(struct Stack * ptr, int value){
+    if (isFull(ptr))
+    {
+        printf("Stack Overflow.");
+        
+    }
+    else
+    {
+        ptr->top++;
+        ptr->arr[ptr->top] = value;
+    }   
+}
+
+int pop(struct Stack * ptr){
+    if (isEmpty(ptr))
+    {
+        printf("Stack Underflow.");
+        return -1;
+    }
+    else{
+        int val = ptr->arr[ptr->top];
+
+        ptr->top--;
+        return val;
+    }
+}
+
+// A function to who print the value at the index
+//to remeber peek gived index from top most position like LIFO not from the bottom as array
+int peek(struct Stack * ptr, int i){
+    int arrIndex = ptr->top-i+1;
+    if (arrIndex<0)
+    {
+        printf("Not a valid position for the stack");
+    }
+    else
+    {
+        return ptr->arr[arrIndex];
+    }    
+}
+
+
+    
+    
+
+
+
+int main()
+{
+    struct Stack *s;
+    s = (struct Stack *) malloc(sizeof(struct Stack));
+
+    s->size = 10;
+    s->top = -1; //when array or stack is empty
+    s->arr = (int *) malloc(s->size * sizeof(int));
+
+    // if (isEmpty(s))
+    // {
+    //     printf("Stack underflow.\n");
+    // }
+
+
+    printf(" %d\n", isEmpty(s));
+    printf(" %d\n", isFull(s));
+
+    push(s, 3);
+    push(s, 6);
+    push(s, 9);
+    push(s, 12);
+    push(s, 15); //2nd index for the peek as LIFo last in first out
+    push(s, 18); // this will be the 1st index
+    push(s, 21); // in Peek this will be the 0th index and
+    
+    printf(" %d\n", isEmpty(s));
+    printf(" %d\n", isFull(s));
+
+
+    printf("Popped %d from the stack", pop(s));
+    push(s, 22); 
+    // printf("Popped %d from the stack", pop(s));
+
+    //printf("Index valus is %d from the stack", peek(s, 1));
+    
+    //To print all the stack vals
+    for (int j = 1; j <= s->top+1; j++)
+    {
+        printf("Index %d value is %d from the stack\n", j, peek(s, j));
+    }
+    
+
+
+    
+
+    return 0;
+}

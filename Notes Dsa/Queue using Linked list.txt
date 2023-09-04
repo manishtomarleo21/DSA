@@ -1,0 +1,83 @@
+#include<stdio.h>
+#include<stdlib.h>
+
+struct Node * r = NULL; //reat
+struct Node * f = NULL;
+
+//Queue using lInked lists
+
+struct Node
+{
+    int data;
+    struct Node * next;
+};
+
+void linkedListTraversal(struct Node * ptr){
+    while (ptr!=NULL)
+    {
+        printf("Element %d\n", ptr->data);
+        ptr = ptr->next;
+    }
+    
+}
+
+void enquque(int val){
+    struct Node * n = (struct Node *) malloc(sizeof(struct Node));
+    if (n==NULL)
+    {
+        printf("Queue is Full\n");
+    }
+    else{
+        n->data = val;
+        n->next = NULL;
+        if (f==NULL) //Onlu when in starting phase where both will be null this will work
+        {
+            f = r = n;
+        }
+        else{
+            r->next = n;
+            r=n;
+        }
+        
+
+    }
+}
+
+int dequeue(){
+    int val = -1;
+    struct Node * ptr = f;
+    if (f==NULL)//isEmpty function in short
+    {
+        printf("Queue is Empty");
+    }
+    else{
+        f = f->next;
+        val = ptr->data;
+        free(ptr);
+    }
+    return val;
+    
+}
+
+int main()
+{
+   // struct Node * r = NULL; //reat
+    //struct Node * f = NULL; //front //We will make ithem as global to update the value as from the function
+
+    // enquque(f, r, 7);
+    // enquque(f, r, 70);
+    // enquque(f, r, 777);
+
+    //Dequeinig when the queue is empty
+    printf("Dequeuing the element %d\n", dequeue());
+    enquque(7);
+    enquque(70);
+    enquque(777);
+    enquque(67);
+
+    printf("Dequeuing the element %d\n", dequeue());
+    linkedListTraversal(f);
+
+
+    return 0;
+}

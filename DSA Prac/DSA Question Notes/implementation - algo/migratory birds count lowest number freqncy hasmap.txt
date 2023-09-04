@@ -1,0 +1,42 @@
+#include <set>
+#include <iostream>
+#include <algorithm>
+#include <map>
+
+
+
+using namespace std;
+
+
+
+int main()
+{
+
+ vector<int> vec = {1, 1, 2, 2, 3};
+
+ map<int, int> m;
+ int maxx = 0;
+ int key = 0;
+ for (int i = 0; i < vec.size(); i++)
+ {
+        m[vec[i]]++;
+        
+ }
+ 
+map<int, int> :: iterator iter;
+
+for(iter = m.begin(); iter != m.end(); iter++){
+    if(iter->second>maxx){
+        maxx = iter->second;
+        key = iter->first;
+    }
+}
+
+ cout<<key<<endl;
+
+
+    
+
+    
+    return 0;
+}

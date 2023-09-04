@@ -1,0 +1,105 @@
+#include <set>
+#include <iostream>
+#include <algorithm>
+#include <bits/stdc++.h>
+#include <stack>
+#include <cstring>
+#include <string>
+
+using namespace std;
+
+const int N = 405;
+const int INF = 360;
+int dist[N][N];
+
+int main()
+{
+
+ 
+
+  for (int i = 0; i < N; i++)
+  {
+    for (int j = 0; j < N; j++)
+    {
+      if(i == j) dist[i][j] = 0;
+      else{
+        dist[i][j] = INF;
+      }
+    }
+    
+  }
+
+  int n, m;
+  cin>>n>>m;
+
+  for (int i = 0; i < m; i++)
+  {
+    int u,v,wt;
+    cin>>u>>v>>wt;
+
+    dist[u][v] = wt;
+  }
+
+  //floyd warshall algo
+  for (int k = 1; k <= n; k++)
+  {
+    for (int i = 1; i <= n; i++)
+    {
+      for (int j = 1; j <= n; j++)
+      {
+        if(dist[i][k]!= INF && dist[k][j] != INF){
+          dist[i][j] = min(dist[i][j], dist[i][k]+dist[k][j]);
+        }
+      }
+    }
+  }
+
+  int q;
+  cin>>q;
+  vector<int>ans;
+
+  for (int i = 0; i < q; i++)
+  {
+    int u,v;
+    cin>>u>>v;
+
+    if(dist[u][v]==INF) cout<< -1<<endl;
+    else{
+      cout<<dist[u][v]<<endl;
+    }
+  }
+  
+
+  // for(int x: ans) cout<<x<<endl;
+  
+  
+  
+
+  return 0;
+}
+
+/*
+4 5     
+1 2 5   
+1 4 24  
+2 4 6
+3 4 4
+3 2 7
+3       
+1 2     
+3 1     
+1 4     
+
+
+4 5     n = 4, m = 5
+1 2 5   u = 1, v = 2, w = 5
+1 4 24  u = 1, v =4, w = 24 ...
+2 4 6
+3 4 4
+3 2 7
+3       q = 3
+1 2     query 0: from 1 to 2
+3 1     query 1: from 3 to 1
+1 4     query 2: from 1 to 4
+
+*/

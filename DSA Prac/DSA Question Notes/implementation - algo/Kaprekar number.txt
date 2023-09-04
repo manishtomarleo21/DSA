@@ -1,0 +1,52 @@
+#include <set>
+#include <iostream>
+#include <algorithm>
+#include <bits/stdc++.h>
+#include <queue>
+#include <cstring>
+#include <string>
+
+using namespace std;
+
+// Kaprekar Numbers from a to b range
+//those numbers which we first square then seperate from middle firste convert then\m to string then separate from
+//middle and add both seperate number if added number equal to the initia; number which we sq lik i*i 
+// and added number is equal to i means its kaprekar number
+
+
+
+int main()
+{
+
+  long long a = 1;
+  long long b= 99999;
+  string sA = "";
+  string sB = "";
+  int flag = 0;
+
+  for (long long i = a; i <= b; i++)
+  {
+      long long sq = i*i;
+      string str = to_string(sq);
+      if(str.length()>1){
+        sA = str.substr(0, str.length()/2);
+        sB = str.substr(str.length()/2, str.length());
+        long long newA = stoi(sA);
+        long long newB = stoi(sB);
+
+        if(newA+newB == i) cout<<i<<" ";
+        
+      }
+
+      if(i==1) {
+        cout<<i<<" ";  
+        flag = 1;
+      }
+        
+
+  }
+  if(flag == 0) cout<<"INVALID RANGE"<<endl;
+  
+
+  return 0;
+}

@@ -1,0 +1,70 @@
+class Array{
+    
+    constructor(){
+        this.length = 0;
+        this.data = {};
+    }
+
+    push(element){
+        this.data[this.length] = element;
+        this.length++;
+        return this.data;
+    }
+
+    pop(){
+        let item = this.data[this.length-1];
+        delete this.data[this.length-1]
+        this.length--;
+        return this.data
+    }
+
+    insert(element, index){
+        for (let i = this.length; i >= index; i--){
+            this.data[i] = this.data[i-1]         
+        }
+        this.data[index] = element
+        this.length++
+        return this.data
+    }
+
+    deleteAtIndex(index){
+        for(let i = index; i < this.length; i++){
+            this.data[i] = this.data[i+1]
+        }
+        this.length--;
+        return this.data;
+    }
+
+    getElementAtIndex(index){
+        return this.data[index];
+    }
+}
+
+
+
+const array =  new Array ();
+array.push(5)
+array.push(15)
+array.push(25)
+array.push(30)
+array.push(35)
+
+// print an element in array
+
+for (const key in array.data) {
+    console.log(array.data[key])
+}
+
+array.pop() 
+
+for (const key in array.data) {
+    console.log(array.data[key])
+}
+
+array.insert(48, 2)
+
+for (const key in array.data) {
+    console.log(array.data[key])
+}
+
+console.log(array.getElementAtIndex(2));

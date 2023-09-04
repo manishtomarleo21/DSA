@@ -1,0 +1,82 @@
+#include <bits/stdc++.h>
+
+using namespace std;
+
+string ltrim(const string &);
+string rtrim(const string &);
+
+/*
+ * Complete the 'isBalanced' function below.
+ *
+ * The function is expected to return a STRING.
+ * The function accepts STRING s as parameter.
+ */
+//this below func is we wrote
+//ti check the balance we do is hold the value in unorder map coz its done in O(1) time constant
+string isBalanced(string s) {
+    stack<char> ss;
+    unordered_map<char, int>mapped = {{'{', -1}, {'[', -2}, {'(', -3}, {'}', 1}, {']', 2}, {')', 3}};
+    
+    for(char brackets: s){
+        if (mapped[brackets]<0) {//only pushing if the stack brackets is less than 0
+            ss.push(brackets);
+        }
+        else{
+            if (ss.empty()) return "NO";
+            char popped_ch = ss.top();
+            ss.pop();
+            //here we are checking with the the stack value which is open brackets in stack
+            //if both brackets are same means 0 val so the 
+            if(mapped[brackets]+mapped[popped_ch]!=0) return "NO";
+            
+        }
+    }
+    if (ss.empty()) return "YES";
+    return "NO";
+
+}
+
+int main()
+{
+    ofstream fout(getenv("OUTPUT_PATH"));
+
+    string t_temp;
+    getline(cin, t_temp);
+
+    int t = stoi(ltrim(rtrim(t_temp)));
+
+    for (int t_itr = 0; t_itr < t; t_itr++) {
+        string s;
+        getline(cin, s);
+
+        string result = isBalanced(s);
+
+        fout << result << "\n";
+    }
+
+    fout.close();
+
+    return 0;
+}
+
+string ltrim(const string &str) {
+    string s(str);
+
+    s.erase(
+        s.begin(),
+        find_if(s.begin(), s.end(), not1(ptr_fun<int, int>(isspace)))
+    );
+
+    return s;
+}
+
+string rtrim(const string &str) {
+    string s(str);
+
+    s.erase(
+        find_if(s.rbegin(), s.rend(), not1(ptr_fun<int, int>(isspace))).base(),
+        s.end()
+    );
+
+    return s;
+}

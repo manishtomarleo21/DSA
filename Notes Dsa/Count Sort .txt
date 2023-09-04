@@ -1,0 +1,85 @@
+#include <stdio.h>
+#include<limits.h>
+#include<stdlib.h>
+
+void printArray(int *arr, int len)
+{
+    for (int i = 0; i < len; i++)
+    {
+        printf("%d, ", arr[i]);
+    }
+    printf("\n");
+}
+
+int maximum(int arr[], int len){
+    int max = INT_MIN; //we will get min by this function 
+
+    for (int i = 0; i < len; i++)
+    {
+        if (max < arr[i])
+        {
+            max = arr[i];
+        }
+        
+    }
+    return max; // this will return max number from the aray
+    
+
+}
+
+//function for asorting
+void countSort(int *arr, int len){
+    //find the maximum nuber in the element a 
+    int max = maximum(arr, len);
+    int i, j;
+
+    //Now we are creating an array with the max element + 1  size length
+    int * count = (int *) malloc((max+1)*sizeof(int));
+
+    //Initializing new array with zero
+    for (i = 0; i < max+1; i++)
+    {
+        count[i] = 0;
+    }
+
+    //NOw this array will put 1 in the index of new array of count[value of [arr]] = which is index of counter
+    for (i = 0; i < len; i++) 
+    {//// jo jo valuse h usme 1+ hota jayega or jo nhi h vh sb zero rh jayegi
+        count[arr[i]] = count[arr[i]]+1; //we are getting index of counter by the value of arr[i] = 3 which is
+    }                                   //count arrays index and we are doing it count[3] = 0+1
+
+    i = 0; // counter for the count array
+    j = 0; // counter for the given array
+
+    while (i <= max) //here max is also a length of the array we can also type i < max+1
+    {   //This will check which array have 1 or number higher than that will put index number in the 
+    //array -- will put index number whichi have 1 written if two then will put two times or 3 if three times
+        if (count[i]>0) 
+        {
+            arr[j] = i;
+            count[i] = count[i]-1;
+            j++;
+        }
+        else{
+            i++;
+        }
+        
+    }
+    
+    
+    
+    
+}
+
+
+int main()
+{
+    int arr[] = {8, 5, 4, 2, 3, 2, 7, 6, 7, 1};
+    int len = 10;
+
+    printArray(arr, len);
+    countSort(arr, len);
+    printArray(arr, len);
+
+    return 0;
+}

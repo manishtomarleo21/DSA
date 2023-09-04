@@ -1,0 +1,108 @@
+/* Node is defined as :
+typedef struct node
+{
+    int val;
+    struct node* left;
+    struct node* right;
+    int ht;
+} node; */
+node *createNode(int key){
+    node * n = (node *) malloc(sizeof(node));
+
+    n->val = key;
+    n->left = NULL;
+    n->right = NULL;
+    n->ht = 0;
+    return n;
+}
+
+int ht(node* root){
+    if(root){
+        return 1+max(ht(root->left), ht(root->right));
+    }
+    return -1;
+}
+void updateHt(node* root){
+    if(root){
+        root->ht = 1 + max(ht(root->left), ht(root->right)); 
+    }
+}
+
+node * rightRotate(node * y){
+    node * x = y->left;
+    node * T2 = x->right;
+
+    //Check the right rotated dig for more information as we are now rotating
+    x->right = y;
+    y->left = T2;
+
+    //Now for height Updation
+    // x->ht = max(getHeight(x->right), getHeight(x->left)) + 1;
+    // y->ht = max(getHeight(y->right), getHeight(y->left)) + 1;
+    updateHt(x);
+    updateHt(y);
+
+    return x;
+}
+
+node * leftRotate(node * x){
+    node * y = x->right;
+    node * T2 = y->left;
+
+    //Check the right rotated dig for more information as we are now rotating
+    y->left = x;
+    x->right = T2;
+
+    //Now for height Updation
+    // x->ht = max(getHeight(x->right), getHeight(x->left)) + 1;
+    // y->ht = max(getHeight(y->right), getHeight(y->left)) + 1;
+    updateHt(x);
+    updateHt(y);
+
+    return y;
+}
+
+
+node * insert(node * n,int key)
+{
+	 if (n == NULL)
+    {
+        return createNode(key);
+    }
+    if (key < n->val)
+    {
+        n->left = insert(n->left, key);
+    }
+    else if (key > n->val)
+    {
+        n->right = insert(n->right, key);
+        
+   }
+
+   // n->ht = 1 + max(getHeight(n->left), getHeight(n->right)); 
+    updateHt(n);
+   //int bf = getBalanceFactor(n); //storing balanceFactor
+    int bf = ht(n->left) - ht(n->right);
+    // Left left Case
+    if(bf >=2 && key < n->left->val){
+        return rightRotate(n);
+    }
+    // Right Right Case
+    if(bf <= -2 && key > n->right->val){
+        return leftRotate(n);
+    }
+    // Left Right Case
+    if(bf >= 2 && key > n->left->val){
+        n->left = leftRotate(n->left);
+        return rightRotate(n);
+    }
+
+    // Right Left Case
+    if(bf <= -2 && key < n->right->val){
+        n->right = rightRotate(n->right);
+        return leftRotate(n);
+    }
+
+    return n;
+  
+}

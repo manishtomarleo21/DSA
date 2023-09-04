@@ -1,0 +1,100 @@
+#include <bits/stdc++.h>
+
+using namespace std;
+
+class Node {
+    public:
+        int data;
+        Node *left;
+        Node *right;
+        Node(int d) {
+            data = d;
+            left = NULL;
+            right = NULL;
+        }
+};
+
+class Solution {
+    public:
+  		Node* insert(Node* root, int data) {
+            if(root == NULL) {
+                return new Node(data);
+            } else {
+                Node* cur;
+                if(data <= root->data) {
+                    cur = insert(root->left, data);
+                    root->left = cur;
+                } else {
+                    cur = insert(root->right, data);
+                    root->right = cur;
+               }
+
+               return root;
+           }
+        }
+
+/*The tree node has data, left child and right child 
+class Node {
+    int data;
+    Node* left;
+    Node* right;
+};
+
+*/
+  //It says loweest common ANCESTOR which means parentS node OF BOTH
+    Node *lca(Node *root, int v1,int v2) {
+		// Write your code here.
+        if (root == NULL)
+        {
+            return NULL;
+        }
+        if(v1 > v2){ //If v2 ki value choti h th we will swap the value of both
+            int temp = v1;
+            v1 = v2;
+            v2 = temp;
+            // v1, v2 = v2, v1; swappin python i dunno its works or not
+        }
+        while (root!=NULL)
+        {
+            //Means in bst the parent node always we in both of them ek se bda or ek se chota
+            //jse hi hme bich ka mila means bohi node he dono ka
+            if(v1 < root->data && v2<root->data){ //agr dono ko data chote h root se left
+                root = root->left;
+            }
+            else if (v1 > root->data && v2>root->data){ //otherwise right
+                root = root->right;
+            }
+            else{
+                return root; //if condition failse th return kr do node
+            }
+        }
+        return root;
+        
+    }
+
+}; //End of Solution
+
+int main() {
+  
+    Solution myTree;
+    Node* root = NULL;
+    
+    int t;
+    int data;
+
+    std::cin >> t;
+
+    while(t-- > 0) {
+        std::cin >> data;
+        root = myTree.insert(root, data);
+    }
+  	
+  	int v1, v2;
+  	std::cin >> v1 >> v2;
+  
+    Node *ans = myTree.lca(root, v1, v2);
+    
+  	std::cout << ans->data;
+
+    return 0;
+}

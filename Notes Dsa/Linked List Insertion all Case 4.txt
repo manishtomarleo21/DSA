@@ -1,0 +1,140 @@
+#include<stdio.h>
+#include<stdlib.h>
+
+//create struct for the linked list 
+struct Node
+{
+    int data;
+    struct Node * next; //This is called SELF REFRENCING STRUCT POINTER TO POINT THE NEXT NODES
+};
+
+void linkedListTraversal(struct Node * ptr){
+
+    while (ptr!=NULL)
+    {
+        printf("%d ", ptr->data);
+        ptr = ptr->next; //This will update everytime loop get runs to next address of list like head then second third
+    }
+}
+
+//CAse 1
+
+//Insertion at the beginning of the linked list
+//functions data type is struct as int or void as it will return the struct pointer
+//To achieve this we create a new memory in heap for a new node. Then pass a head node in a function then
+//set ptr data and ptr next to head and return ptr and updete the head when you call the fuction
+//This way the head get updated and ptr will be the new
+
+struct Node * insertingAtBeginnning(struct Node * head, int data){ 
+
+    struct Node * ptr = (struct Node *) malloc(sizeof(struct Node));
+    ptr->next = head;
+    ptr->data = data;
+    return ptr;
+
+}
+
+//CAse 2
+//Insertion at the given index of the linked list
+struct Node * insertAtIndex(struct Node * head, int data, int index){
+    struct Node * ptr = (struct Node *) malloc(sizeof(struct Node));
+    
+    struct Node * p = head; //coz we dont wanna lose main head and we also want tp travel to index number so new p
+    int i = 0;
+
+    while (i!=index-1)//Index -1 coz we want to put the node before the index position so or in between
+    {
+        p = p->next;//keep going to next node untill go to the index
+        i++;// we do not have index in the linked so this how we running i along
+    }
+
+
+    ptr->data = data;
+    ptr->next = p->next;
+    p->next = ptr;
+    return head;
+    
+}
+//CAse 3
+struct Node * insertAtEnd(struct Node * head, int data){
+    struct Node * ptr = (struct Node *) malloc(sizeof(struct Node));
+    ptr->data = data;
+    struct Node * p = head;
+
+    while (p->next!= NULL)
+    {
+        p = p->next;
+
+    }
+    p->next = ptr;
+    ptr->next = NULL;
+    return head;
+ 
+
+}
+
+//CAse 4
+struct Node * insertAfterNode(struct Node * head, struct Node * prevNode, int data){
+    struct Node * ptr = (struct Node *) malloc(sizeof(struct Node));
+    ptr->data = data;
+
+    ptr->next = prevNode->next;
+    prevNode->next = ptr;
+
+    return head;
+
+}
+
+
+int main()
+{
+    struct Node  * head;
+    struct Node  * second;
+    struct Node  * third;
+
+    //allocating memory for the nodes in the linked lists in heap
+    head = (struct Node *) malloc(sizeof(struct Node));
+    second = (struct Node *) malloc(sizeof(struct Node));
+    third = (struct Node *) malloc(sizeof(struct Node));
+
+    //Linking head node to second node
+    (*head).data = 7; //We can also use the arraow operator for derefrencing
+    head->next = second; //holds the address of the second liked list or array
+
+    //Linking second node to third node
+    second->data = 11;
+    second->next = third;
+
+    //Termintaing the linked list
+    third->data = 15;
+    third->next = NULL;
+
+    //Caliing the fuction to run to traversal through the linked lists
+   linkedListTraversal(head);
+
+   printf("\n");
+    //calling the function for inseting before the head node
+    head = insertingAtBeginnning(head, 4);
+    //Updated linked list
+    linkedListTraversal(head);
+
+
+    printf("\n");
+
+    //Insetion at index in between
+    head = insertAtIndex(head, 44, 3);//wont work for zero index as its insertion in the between not head
+    //Updated linked list
+    linkedListTraversal(head);
+
+
+    printf("Linked list after ending node addition\n");
+    //Insert At End
+    head = insertAtEnd(head, 66);
+    linkedListTraversal(head);
+
+    printf("\nLinked list after a given node addition\n");
+    head = insertAfterNode(head, second, 99);
+    linkedListTraversal(head);
+
+    return 0;
+}

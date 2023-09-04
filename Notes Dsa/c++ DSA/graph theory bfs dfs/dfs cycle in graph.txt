@@ -1,0 +1,65 @@
+#include <set>
+#include <iostream>
+#include <algorithm>
+#include <bits/stdc++.h>
+#include <stack>
+#include <cstring>
+#include <string>
+
+using namespace std;
+
+
+// for adjacency list; vector of array
+vector<int> graph2[100];
+
+bool visited[100];
+
+bool dfs(int vertex, int parent){
+
+   bool isLoopExist = false; 
+   visited[vertex] = true;
+
+   for(int child : graph2[vertex]){
+    if(visited[child] && child == parent) continue;
+    if(visited[child]) return true; // this condiotion will give the cycle
+
+    isLoopExist |= dfs(child, vertex); //its or equal to true false will reutrn true 
+   } 
+
+   return isLoopExist;
+}
+
+int main()
+{
+
+  // n = no. of vertex || m = no. of connected nodes like (2,3) ||(4,1)
+  int n, m;  
+  cin>>n>>m;
+
+  for (int i = 0; i < m; i++)
+  {
+    int v1, v2; //vertex which is connectec
+    cin>>v1>>v2;
+
+
+    //list representation of graph
+    graph2[v1].push_back(v2);
+    graph2[v2].push_back(v1);
+
+  }
+
+  //run loop for all the nodes
+  bool isLoopexist = false;
+  for (int i = 1; i <= n ; i++)
+  {
+    if(visited[i]) continue;
+    if(dfs(i, 0)){
+      isLoopexist = true;
+      break;
+    }
+  }
+  cout<<isLoopexist<<endl;
+  
+
+  return 0;
+}

@@ -1,0 +1,133 @@
+#include<stdio.h>
+#include<stdlib.h>
+
+struct Node
+{
+    char data;
+    struct Node* next;
+};
+
+int isEmpty(struct Node* top){
+    if(top==NULL) return 1;
+    return 0;
+}
+
+int isFull(struct Node* top){
+    struct Node* ptr = (struct Node*) malloc(sizeof(struct Node));
+    if(ptr==NULL) return 1;
+    return 0;
+
+}
+
+struct Node* push(struct Node* top, char val){
+    struct Node* ptr = (struct Node*) malloc(sizeof(struct Node));
+    ptr->data = val;
+
+    ptr->next = top;
+    top = ptr;
+    return ptr;
+}
+
+char pop(struct Node** top){
+    if(isEmpty(*top)){
+        return -1;
+    }
+    struct Node* temp = *top;
+    (*top) = (*top)->next;
+    char val = temp->data;
+    free(temp);
+    return val;
+    
+}
+
+void stackTraversal(struct Node* top){
+    while (top!=NULL)
+    {
+        printf("%c ", top->data);
+        top = top->next;
+    }
+    
+}
+
+int paranthesisMatch(char* exp){
+    struct Node* st = NULL;
+
+    for (int i = 0; exp[i]!='\0'; i++)
+    {
+        if(exp[i] == '('){
+            st = push(st, exp[i]);
+        }
+        else if(exp[i]==')'){
+            if(isEmpty(st)){
+                return 0;
+            }
+            pop(&st);
+        }
+    }
+    if(isEmpty(st)){
+        return 1;
+    }else{
+        return 0;
+    }
+    
+    
+}
+
+char stackTop(struct Node* top){
+    return top->data;
+}
+
+int match(char a, char b){
+    if(a == '(' && b == ')') return 1;
+    if(a == '{' && b == '}') return 1;
+    if(a == '[' && b == ']') return 1;
+    return 0;
+}
+
+int parantMatch(char* exp){
+    struct Node* st = NULL;
+    char popped;
+    for (int i = 0; exp[i]!='\0'; i++)
+    {
+        if(exp[i]=='(' || exp[i]=='{' || exp[i]=='['){
+            st = push(st, exp[i]);
+        }
+        else if(exp[i]==')' || exp[i]=='}' || exp[i]==']'){
+            if(isEmpty(st)) {
+                return 0;
+            }
+                
+            popped = pop(&st);
+            if(!match(popped, exp[i])) {
+                return 0;
+            }
+        }
+    }
+    if(isEmpty(st)) return 1;
+    else return 0;
+    
+}
+
+
+
+
+
+int main()
+{
+    char * exp = "[]{(8)*(9)]}";
+
+    int val = parantMatch(exp);
+    if(val == 1) printf("Matched");
+    else printf("UnMatched");
+
+    // struct Node* top = NULL;
+    // top = push(top, 7);
+    // top = push(top, 14);
+    // top = push(top, 21);
+    // top = push(top, 28);
+
+
+    // printf("Deleted val %c\n", pop(&top));
+    // stackTraversal(top);
+    return 0;
+}

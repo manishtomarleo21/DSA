@@ -1,0 +1,46 @@
+#include <set>
+#include <iostream>
+#include <algorithm>
+#include <map>
+
+
+
+using namespace std;
+
+
+
+
+int main()
+{
+
+    vector<int> bill = {10, 20, 20, 10, 10, 30, 50, 10, 20};
+    unordered_map<int, int> m; 
+    int count = 0;
+  
+    for (int i = 0; i < bill.size(); i++)
+    {
+        m[bill[i]]++;
+        if(m[bill[i]]==2){
+            count++;
+            m[bill[i]] = 0;
+        }
+    }
+
+    // unordered_map<int, int> :: iterator iter;
+
+    // for(iter = m.begin(); iter != m.end(); iter++){
+
+    //     if(iter->second%2 != 0){
+    //         count++;
+    //     }
+    // }
+
+    cout<<count<<endl;
+    
+    
+
+
+
+    
+    return 0;
+}

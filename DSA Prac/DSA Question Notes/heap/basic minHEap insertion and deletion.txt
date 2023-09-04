@@ -1,0 +1,144 @@
+#include <cmath>
+#include <cstdio>
+#include <vector>
+#include <iostream>
+#include <algorithm>
+#include<queue>
+using namespace std;
+
+//it failed some test cases
+
+class Heap
+{
+   public:
+      int arr[10000];
+      int size;
+      Heap(){
+         arr[0] = -1;
+         size = 0;
+      }
+
+      void insert(int val){
+         size = size+1;
+         int index = size;
+         arr[index] = val;
+
+         while (index>1)
+         {
+            int parent = index/2;
+
+            if(arr[parent]>arr[index]){
+               swap(arr[parent], arr[index]);
+               index = parent;
+            }
+            else{
+               return;
+            }
+         }
+         
+      }
+
+      void deleteElem(int val){
+         for (int i = 1; i <= size; i++)
+         {
+            if (val == arr[i])
+            {
+               swap(arr[i], arr[size]);
+               size--;
+               break;
+            }
+            
+         }
+         int i = 1;
+         while (i<size)
+         {
+            int leftind = 2*i;
+            int rightind = 2*i+1;
+
+            if(leftind < size && arr[i] > arr[leftind] ){
+               swap(arr[i], arr[leftind]);
+               i = leftind;
+            }
+             else if (rightind < size && arr[i] > arr[rightind])
+            {
+                swap(arr[i], arr[rightind]);
+                i = rightind;
+            }
+            else{
+                return ;
+            }
+         }
+         
+         
+      }
+
+      void printtop(){
+         cout<<arr[1]<<endl;
+      }
+      void printHeap(){
+        for (int i = 1; i <= size; i++)
+        {
+            cout<<arr[i]<<" ";
+        }cout<<endl;
+        
+    }
+
+};
+
+
+
+int main() {
+    /* Enter your code here. Read input from STDIN. Print output to STDOUT */   
+
+   Heap hp;
+   // hp.insert(15);
+   // hp.insert(9);
+   // hp.insert(6);
+   // hp.insert(18);
+   // hp.insert(4);
+
+   // hp.deleteElem(6);
+
+   // hp.printtop();
+   // hp.printHeap();
+
+
+    int n,q,d;
+    cin>>n;
+
+     while (n--)
+    {
+      cin>>q;
+      switch (q)
+      {
+      case 1:
+         cin>>d;
+         hp.insert(d);
+         break;
+      case 2:
+         cin>>d;
+         hp.deleteElem(d);
+         break;
+      default:
+         hp.printtop();
+         break;
+      }
+    }
+    
+
+
+
+
+    return 0;
+}
+/*
+
+5           Q = 5
+1 4         insert 4
+1 9         insert 9
+3           print minimum
+2 4         delete 4
+3           print minimum
+
+
+*/

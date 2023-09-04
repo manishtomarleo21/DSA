@@ -1,0 +1,140 @@
+#include <iostream>
+#include <deque> 
+using namespace std;
+
+//getting subarray max values by deque (double ended queue) and sliding window algo
+
+void printKMax(int arr[], int n, int k){
+	//here arr is given array of n size have to find the k sub array
+  //suppose array is {3, 4, 6, 3, 4}; so k = 2 sub array will be {3,4},{4,6},{6,3} and {3,4}
+  //and with the every sub array we wann find the max no like 4,6,6,4
+
+
+  deque<int> maxDe; //we are creating a deque with the k size
+  //in deque we only store the index to get the array max valuse
+
+  for (int i = 0; i < n; i++)
+  {
+    if (maxDe.empty())
+    {
+      //initializing the max index 
+      maxDe.push_back(i); 
+    }
+
+    if(maxDe.front() <= (i-k)){  
+      maxDe.pop_front();
+    }
+
+    while ((!maxDe.empty()) && arr[i] >= arr[maxDe.back()])
+    {
+        maxDe.pop_back();
+    }
+    maxDe.push_back(i);
+    
+    
+      //THIS WILL PRINT WHEN THE FIRST WINDOW IS COMPLETED
+      if (i >= (k-1))
+      {
+          cout<<arr[maxDe.front()]<<" "; //this will print only when the first sub array or window comparisin is
+      } //is donw
+    
+    
+  }
+  
+
+  cout<<endl;
+
+
+}
+
+int main(){
+  
+	int t;
+	cin >> t;
+	while(t>0) {
+		int n,k;
+    	cin >> n >> k;
+    	int i;
+    	int arr[n];
+    	for(i=0;i<n;i++)
+      		cin >> arr[i];
+    	printKMax(arr, n, k);
+    	t--;
+  	}
+  	return 0;
+}
+
+/*
+2
+5 2
+3 4 6 3 4
+7 4
+3 4 5 8 1 4 10
+
+
+*/
+//My code with bekar time compexity
+
+#include <iostream>
+#include <deque> 
+using namespace std;
+
+void printKMax(int arr[], int n, int k){
+	int start = 0;
+    int end = k;
+
+	deque<int> maxArr;
+    int max=0;
+
+	 for (int i = 0; end <= n; i++)
+    {
+      for (int j = start; j < end; j++)
+      {
+        if (max < arr[j])
+        {
+            max = arr[j];
+            
+        }
+      }
+      
+      start++;
+      end++;
+      maxArr.push_back(max);
+      max=0;
+    }
+
+	 for(auto x: maxArr){
+        cout<<x<<" ";
+    }
+    cout<<endl;
+    // maxArr.clear();
+
+}
+
+int main(){
+  
+	int t;
+	cin >> t;
+	while(t>0) {
+		int n,k;
+    	cin >> n >> k;
+    	int i;
+    	int arr[n];
+    	for(i=0;i<n;i++)
+      		cin >> arr[i];
+    	printKMax(arr, n, k);
+    	t--;
+  	}
+  	return 0;
+}
+
+/*
+2
+5 2
+3 4 6 3 4
+7 4
+3 4 5 8 1 4 10
+
+
+*/
+

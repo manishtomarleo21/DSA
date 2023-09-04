@@ -1,0 +1,43 @@
+#include <cmath>
+#include <cstdio>
+#include <vector>
+#include <iostream>
+#include <algorithm>
+#include<set>
+using namespace std;
+
+
+
+int main() {
+    /* Enter your code here. Read input from STDIN. Print output to STDOUT */   
+    
+    //for heap question set will work its min heap questin
+    //inset in ascending order avobe val always be minimum
+    set<int> sett;
+    
+    int n,q,d;
+    cin>>n;
+
+     while (n--)
+    {
+      cin>>q;
+      switch (q)
+      {
+      case 1:
+         cin>>d;
+         sett.insert(d);
+         break;
+      case 2:
+         cin>>d;
+         sett.erase(sett.find(d));
+         break;
+      default:
+        //basicaly set.begin gives the pointer or addresss to get the value use star
+         cout<<*sett.begin()<<endl;
+         break;
+      }
+    }
+    
+
+    return 0;
+}

@@ -1,0 +1,47 @@
+#include<iostream>
+
+using namespace std;
+
+int findStr(string str, string f){
+    int flag;
+    int len = str.length();
+    int lenWord = f.length();
+
+    for (int i = 0; i < len-lenWord; i++)
+    {
+        if (str[i]==f[0])
+        {
+            flag = 0;
+            for (int j = 0; j < lenWord; j++)
+            {
+                if (str[i+j] != f[j])
+                {
+                    flag = 1;
+                    break; 
+                }
+                
+            }
+                        
+        }
+        if (flag == 0)
+        {
+            return i;
+        }
+        
+        
+    }
+    return -1;
+    
+}
+
+int main()
+{
+    string s = "GeeksForGeeks";
+    string x = "For";
+
+    int elem = findStr(s, x);
+
+    cout<<elem<<endl;
+
+    return 0;
+}

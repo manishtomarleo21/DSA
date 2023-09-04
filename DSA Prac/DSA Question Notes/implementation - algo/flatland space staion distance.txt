@@ -1,0 +1,66 @@
+#include <set>
+#include <iostream>
+#include <algorithm>
+#include <bits/stdc++.h>
+#include <queue>
+#include <cstring>
+#include <string>
+
+using namespace std;
+
+
+
+int main()
+{
+
+    int n = 5,p,q;
+    int rMax = 0;
+    int lMax = 0;
+    int maxx;
+    vector<int> vec(n, -1);
+
+    vector<int> c = {0, 4};
+    vector<int> r(n, 0);
+    vector<int> l(n, 0);
+
+    for (int i = 0; i < c.size(); i++)
+    {
+      vec[c[i]] = c[i];
+    }
+
+    for (int i = 0; i < n; i++)
+    {
+      p = 0;
+      q = 0;
+
+      for (int j = i, k = i; j < n || k >= 0; j++, k--)
+      {
+          if(j<n){
+            if(vec[j]==-1) p++;
+            else{
+                r[i] = p;
+                break;
+            }
+          }
+          if(k>=0){
+            if(vec[k]==-1) q++;
+            else{
+                l[i] = q;
+                break;
+            }
+          }
+      }
+      
+    }
+    
+    
+  rMax = *max_element(r.begin(), r.end());
+  lMax = *max_element(l.begin(), l.end());
+
+  maxx = max(rMax, lMax);
+
+  cout<<maxx<<endl;
+
+
+  return 0;
+}

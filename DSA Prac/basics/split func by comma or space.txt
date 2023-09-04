@@ -1,0 +1,34 @@
+#include<iostream>
+#include<string>
+
+using namespace std;
+
+void splitByComma(string str){
+    string word = "";
+    for (int i =0; i < str.size(); i++)
+    {
+        if (str[i] == ',')
+        {
+            cout<<word<<endl;
+            word = "";
+        }
+        else{
+            word = word+str[i];
+        }
+        
+    }
+    cout<<word<<endl;
+}
+
+int main()
+{
+    
+    string str = "23,46,5"; 
+
+    splitByComma(str);
+
+   
+
+
+    return 0;
+}

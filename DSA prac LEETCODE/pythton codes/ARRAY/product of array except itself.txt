@@ -1,0 +1,32 @@
+
+def generate(num: list[int]) -> list[int]:
+    
+   n = len(num)
+   ans = []
+   if n < 1:
+      return ans
+
+   product = 1
+
+   for i in range(n):
+      product*=num[i] 
+      ans.append(product)
+   
+   # for right traverse
+   product = 1
+
+   for i in range(n-1, -1, -1):
+      ans[i] = product*ans[i-1]
+      product*=num[i]
+
+   ans[0] = product
+
+   return ans
+
+num = [1,2,3,4]
+
+# ls= list(generate(num))
+
+   
+# pivotIndex(lis1)
+print(generate(num))

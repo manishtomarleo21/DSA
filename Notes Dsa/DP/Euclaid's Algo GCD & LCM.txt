@@ -1,0 +1,38 @@
+#include <set>
+#include <iostream>
+#include <algorithm>
+#include <queue>
+
+//Euclaid's algorithms for GCD(greatest common factor or highest common factor) and LCM lowest common multiple
+
+
+using namespace std;
+
+int gcd(int a, int b){
+    if(b == 0) return a;
+    return gcd(b, a%b);
+}
+
+
+int main()
+{
+    //to get gcd above recursion function in every division divisor get swapped with divident with reminder
+    cout<<gcd(18, 12)<<endl;
+    cout<<gcd(12, 18)<<endl; //doesnt matter bigger value wheres passed result will be the same 
+
+    //for lCM formula is a x b / gcd(a,b);
+
+    //lcm
+    cout<<12*18/gcd(12,18)<<endl;
+    //if given three numer
+    // for gcd(gcd(a,b), c);
+
+    //inbuilt gcd function is also there
+
+    int a = __gcd(12, 18);
+    cout<<a<<endl;
+
+    
+    return 0;
+}
+

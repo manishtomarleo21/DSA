@@ -1,0 +1,52 @@
+#include<stdio.h>
+#include<stdlib.h>
+
+struct Node
+{
+    int data;
+    struct Node * prev;
+    struct Node * next;
+};
+
+void doublyLinkedListTraversal(struct Node * nxt, struct Node * prv ){
+    while (nxt!=NULL)
+    {
+        printf("%d ", nxt->data);
+        nxt = nxt->next;
+    }
+    printf("\n");
+    while (prv!=NULL)
+    {
+        printf("%d ", prv->data);
+        prv = prv->prev;
+    }
+
+}
+
+
+int main()
+{
+    struct Node * head;   
+    struct Node * second;   
+    struct Node * third;
+
+    head = (struct Node *) malloc(sizeof(struct Node));   
+    second = (struct Node *) malloc(sizeof(struct Node));   
+    third = (struct Node *) malloc(sizeof(struct Node));   
+
+    head->prev = NULL;
+    head->data = 3;
+    head->next = second;
+
+    second->prev = head;
+    second->data = 6;
+    second->next = third;
+
+    third->prev = second;
+    third->data = 9;
+    third->next = NULL;
+
+    doublyLinkedListTraversal(head, third);
+
+    return 0;
+}

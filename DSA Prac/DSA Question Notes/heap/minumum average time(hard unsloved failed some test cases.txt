@@ -1,0 +1,81 @@
+#include <cmath>
+#include <cstdio>
+#include <vector>
+#include <iostream>
+#include <algorithm>
+#include<queue>
+using namespace std;
+
+//this code is good for first come first serve but failing test cases in 
+//optimize solution is the short job first manner
+
+unsigned long long int minimumAverage(vector<vector<int>> customers){
+    //first we need to short the array as we need interval time to be sorted for all the customers
+    //which time they came in
+    sort(begin(customers), end(customers));
+
+
+    //minHeap vector of vector
+    priority_queue<vector<unsigned long long int>, vector<vector<unsigned long long int>>, greater<vector<unsigned long long int>>> pq; //duration, ordertime
+
+    unsigned long long int totalTime = 0, currentTime = 0;
+
+    int index = 0, len = customers.size();
+
+    while (index<len || !pq.empty())
+    {
+        //it will push for the first time
+        if (pq.empty())
+        {
+            pq.push({(unsigned long long int)customers[index][1], (unsigned long long int)customers[index][0]});
+            if (currentTime<customers[index][0])
+            {
+                currentTime = customers[index][0];
+            }
+            index++;
+        }
+
+        // then here for the second time where minheap adjust by the duration the top will be the lesser one
+        unsigned long long int orderTime = pq.top()[1];
+        unsigned long long int duration = pq.top()[0];
+        pq.pop();
+
+        currentTime+= duration;
+        totalTime+= currentTime-orderTime;
+        //after first customers this will the case
+        while (index<len && customers[index][0]<=currentTime)
+        {
+            pq.push({(unsigned long long int)customers[index][1], (unsigned long long int)customers[index][0]});
+            index++;
+        }
+        
+
+        
+    }
+    
+
+    return floor(totalTime/len);
+   
+
+}
+
+
+int main() {
+    /* Enter your code here. Read input from STDIN. Print output to STDOUT */   
+    
+    vector<vector<int>> vec = {{0, 3}, {1, 9}, {2, 6}};
+   
+//    std::cout.precision(1);
+//         std::cout.setf(std::ios::fixed);
+    // cout << fixed;
+   cout<<"Time is"<<minimumAverage(vec)<<endl;
+    
+    
+    
+
+    return 0;
+}
+
+//simple approach
+
+

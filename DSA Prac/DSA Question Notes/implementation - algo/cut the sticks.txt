@@ -1,0 +1,69 @@
+#include <set>
+#include <iostream>
+#include <algorithm>
+#include <bits/stdc++.h>
+#include <queue>
+#include <cstring>
+#include <string>
+
+using namespace std;
+
+100% my code succedded
+
+int minimum(vector<int> vec)
+{
+  int mim = 10000;
+  for (int i = 0; i < vec.size(); i++)
+  {
+    if (vec[i] != 0)
+    {
+      if (vec[i] < mim)
+      {
+        mim = vec[i];
+      }
+    }
+  }
+
+  return mim;
+}
+
+int main()
+{
+
+  vector<int> vec = {1, 2, 3, 4, 3, 3, 2, 1};
+  int count = 0;
+  vector<int> ans;
+
+  while (vec.size() >= 2)
+  {
+    int min = minimum(vec);
+    for (int i = 0; i < vec.size(); i++)
+    {
+      
+      if (vec[i] == 0)
+      {
+        vec.erase(vec.begin() + i);
+      }
+
+      if (vec[i] != 0)
+      {
+        vec[i] -= min;
+        count++;
+      }
+
+      if (vec.size() == 1)
+      {
+        break;
+      }
+    }
+    if(count!=0){
+      ans.push_back(count);
+    }
+    count = 0;
+  }
+
+  for (int x : ans)
+    cout << x << " ";
+
+  return 0;
+}

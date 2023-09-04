@@ -1,0 +1,71 @@
+#include <iostream>
+#include <vector>
+#include <string>
+#include <queue>
+using namespace std;
+
+
+void bfs(int source, vector<bool> &visited, vector<vector<int>> &graph1, vector<int> &level){
+
+    queue<int> q;
+    q.push(source);
+    visited[source] = true;
+
+    while (!q.empty())
+    {
+        int curr_vert = q.front();
+        q.pop();
+        cout<<curr_vert<<" ";
+        for(int child : graph1[curr_vert]){
+            if(!visited[child]){
+                q.push(child);
+                visited[child] = true;
+                level[child] = level[curr_vert]+1;
+            }
+        }
+    }
+    
+   
+}
+
+
+int main() {
+  
+    int n = 5, m = 3;
+
+    vector<vector<int>> astronaut = {{1, 2}, {1, 3}, {1, 4}};
+    vector<bool> visited(n+1, 0);
+    vector<int> level(n+1, 0);
+
+    vector<vector<int>> graph1(n+1);
+    for (int i = 0; i < astronaut.size(); i++)
+    {
+        graph1[astronaut[i][0]].push_back(astronaut[i][1]);
+        graph1[astronaut[i][1]].push_back(astronaut[i][0]);
+    }
+    
+    bfs(1, visited, graph1, level);
+
+    //we can also print the level of the graph
+    
+    // vector<vector<int>> astronaut;
+
+  
+
+    // int n, m;
+    // cin>>n>>m;
+    // for (int i = 0; i < m; i++)
+    // {
+    //     int v1, v2;
+    //     cin>>v1, v2;
+    //     astronaut[i][0] = v1;
+    //     astronaut[i][1] = v2;
+
+    // }
+    
+
+
+    return 0;
+}
+
+

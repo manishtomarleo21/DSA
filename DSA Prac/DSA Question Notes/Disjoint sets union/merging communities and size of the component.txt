@@ -1,0 +1,121 @@
+#include <numeric>
+#include <iostream>
+#include <algorithm>
+#include <queue>
+
+
+using namespace std;
+
+void makeSet(vector<int> &parent, vector<int> &size, vector<int> &rank, int n){
+    for (int i = 1; i <= n; i++)
+    {
+        parent[i] = i;
+        rank[i] = 0;
+        size[i] =1;
+    }
+    
+    
+
+}
+
+int findParent(vector<int> &parent, int node){
+    if (parent[node]==node)
+    {
+        return node;
+    }
+    return parent[node] = findParent(parent, parent[node]);
+    
+}
+
+void unionSet(int u, int v, vector<int> &parent, vector<int> &rank, vector<int> &size){
+
+    u = findParent(parent, u);
+    v = findParent(parent, v);
+
+    // if(rank[u]<rank[v]){
+    //     parent[u] = v;
+    //     size[v]+= size[u];
+    //     size[u] = 0;
+    // }
+    // else if(rank[v]<rank[u]){
+    //     parent[v] = u;
+    //     size[u]+= size[v];
+    //     size[v] = 0;
+    // }
+    // else{
+    //     parent[v] = u;
+    //     rank[u]++;
+    //     size[u]+= size[v];
+    //     size[v] = 0;
+    // }
+
+    //only this conditoni is enough to past the test cases for the size of the merginng commmunities above
+    //were failing some test cases
+
+    // if(u != v){
+    //     parent[u] = v;
+    //     size[v]+=size[u];
+    //     size[u] = 0;
+    // }
+
+    //this 2 codes is enough for the commparision as well above if else ladder by babbar
+    //this by luv of competetive programming
+
+    if(u!=v){
+        if(size[u]<size[v]){
+            swap(u,v);
+        }
+        parent[v] = u;
+        size[u]+=size[v];
+    }
+
+
+}
+
+int main()
+{
+    int n;
+    cin>>n;
+    vector<int> parent(n+1);
+    vector<int> rank(n+1);
+    vector<int> size(n+1);
+    
+    
+
+    makeSet(parent, size, rank, n);
+
+    int q;
+    cin>>q;
+    char inp;
+    int a,b,par;
+
+    while (q--)
+    {
+        cin>>inp;
+        switch (inp)
+        {
+        case 'Q':
+            cin>>a;
+            par = findParent(parent, a);
+            cout<<size[par]<<endl;
+            break;
+
+        case 'M':
+            cin>>a>>b;
+            unionSet(a, b, parent, rank, size);
+        
+        default:
+            break;
+        }
+    }
+    
+
+    return 0;
+}
+
+/*
+3 6 n = 3, q = 6 Q 1 print the size of the community containing person 1 M 1 2 merge the communities containing persons
+ 1 and 2 ... Q 2 M 2 3 Q 3 Q 2
+
+
+*/

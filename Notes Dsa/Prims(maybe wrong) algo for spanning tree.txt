@@ -1,0 +1,233 @@
+#include<stdio.h>
+#include<stdlib.h>
+
+//Here n in number of nodes
+void prims(int n, int cost[10][10]){
+    int u, v, min, mincost = 0;
+    int numOfEdges = 1;
+    int visited[10]; //We will mark every vertex as soon as gets added on the node first we initialize
+    //every index with the zero
+    for (int i = 1; i <= n; i++)
+    {
+        visited[i] = 0;
+    }
+     printf("\n The edges considered for MST are \n");
+     visited[1] = 1;
+
+     while (numOfEdges < n)
+     {
+         for (int i = 1, min = 999; i <= n; i++)
+         {
+             for (int j = 1; j <= n; j++)
+             {
+                 if (cost[i][j] < min)
+                 {
+                     if (visited[i]==0)
+                     {
+                         continue;
+                     }
+                     else{
+                         min = cost[i][j];
+                         u = i;
+                         v = j;
+                     }
+                     
+                 }
+                 
+             }
+             
+         }
+         if (visited[u]==0 || visited[v] == 0)
+         {
+             printf("%d Edge(%d, %d) = %d", numOfEdges++, u, v, min);
+             mincost = mincost + min;
+             visited[v] = 1;
+         }
+         cost[u][v] = cost[v][u] = 999;
+         
+     }
+     printf("\n Cost of constructing MST is %d", mincost);
+
+
+}
+
+
+int main()
+{
+    int n, cost[10][10]; //n is number of nodes and cost is the adjacency matrix
+    printf("\n Read number of nodes:");
+    scanf("%d", &n); //taking input from the user for the number of the nodes
+    
+    //This function takes the input of the adjacency matrix with the weight where there is connection
+    printf("\n Read Cost Matrix:");
+    for (int i = 1; i <= n; i++) //starting from the index 1 as we dont want zero indexes can also write
+    {                           // i = 0 i< n-1 both will be the same
+        for (int j = 1; j <= n; j++)
+        {
+            scanf("%d", &cost[i][j]); 
+            if (cost[i][j] == 0) //conditoin for no coonectino 0 to 999 as we wanna find minimun num not zero
+            {
+                cost[i][j] = 999;
+            }
+            
+        }
+        
+    }
+    //For ex. the graph is 
+    /*
+        A
+      5/  \
+      /    \ 6
+    B ------C
+        10
+
+     we put matrix like wight and zero
+          a   b   c
+     a    0   5   6
+     b    5    0   10
+     c    6    10   0
+
+     //We know that we want the minimum wight edge so we can connect for the tree growth
+     //so everytime we compare it will give us zero so we write a condition that if matrix[i][j]==0
+     //turn it matrix[i][j] = 999 or something bigger
+
+           a   b   c
+     a    999  5   6
+     b    5    999  10
+     c    6    10   999 
+    
+   //and our final MST willl also look like
+        A
+      5/  \
+      /    \ 6
+    B      C
+//AS we know that spannig tree have |V|-1 edges and non cyclic         
+
+    */
+    prims(n, cost);
+    
+
+    return 0;
+}
+
+_____________________________________________________________
+ANother version
+
+#include<stdio.h>
+#include<stdlib.h>
+#define infinity 9999
+#define MAX 20
+
+//defining it globally so we can use everywhere without passsing in the function
+int graph[MAX][MAX];
+int spanning[MAX][MAX];
+int numOfNodes;
+
+
+int prims(){
+    int cost[MAX][MAX];
+    int u, v, min_distance, distance[MAX], from[MAX];
+    int visited[MAX], no_of_edges, min_cost;
+
+    for (int i = 0; i < numOfNodes; i++)
+    {
+        for (int  j = 0; j < numOfNodes; j++)
+        {
+            if (graph[i][j] == 0)
+            {
+                cost[i][j] == infinity;
+            }
+            else{
+                cost[i][j] = graph[i][j];
+                spanning[i][j] = 0;
+            }
+            
+        }
+        
+    }
+
+    //INitializing all the arrays with zero
+    distance[0] = 0;
+    visited[0] = 1;
+    for (int i = 1; i < numOfNodes; i++)
+    {
+        distance[i] = cost[0][i];
+        from[i] = 0;
+        visited[i] = 0;
+    }
+
+    min_cost = 0;
+    no_of_edges = numOfNodes - 1;
+
+    while (no_of_edges > 0)
+    {
+        min_distance = infinity;
+        for (int i = 1; i < numOfNodes; i++)
+        {
+            if (visited[i]==0 && distance[i]<min_distance)
+            {
+                v = i;
+                min_distance = distance[i];
+            }
+            
+        }
+
+        u = from[v];
+
+        spanning[u][v] = distance[v];
+        spanning[v][u] = distance[v];
+        no_of_edges--;
+        visited[v] = 1;
+
+        //Update the distance array
+        for (int i = 1; i < numOfNodes; i++)
+        {
+            if (visited[i]==0 && cost[i][v]<distance[i])
+            {
+                distance[i] = cost[i][v];
+                from[i] = v;
+            }
+            
+        }
+        
+        min_cost = min_cost + cost[u][v];
+    }
+    
+    return (min_cost);
+    
+}
+
+
+int main()
+{
+    int total_cost;
+    printf("Enter no. of vertices. ");
+    scanf("%d", &numOfNodes);
+
+    printf("\nEnter the adjacency matrix: \n ");
+    for (int i = 0; i < numOfNodes; i++)
+    {
+        for (int j = 0; j < numOfNodes; j++)
+        {
+            scanf("%d", &graph[i][j]);
+        }
+        
+    }
+
+    total_cost = prims();
+    printf("\nSpanning tree matirx:\n");
+    for (int i = 0; i < numOfNodes; i++)
+    {
+        printf("\n");
+        for (int j = 0; j < numOfNodes; j++)
+        {
+            printf("%d\t", spanning[i][j]);
+        }
+        
+    }
+    
+    printf("\n\nTotal Cost of spanning tree = %d", total_cost);
+
+    return 0;
+}
+

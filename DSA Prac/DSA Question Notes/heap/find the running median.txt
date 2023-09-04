@@ -1,0 +1,186 @@
+#include <cmath>
+#include <cstdio>
+#include <vector>
+#include <iostream>
+#include <algorithm>
+#include<queue>
+using namespace std;
+
+//1s optimized approach with O(nlogn)
+
+priority_queue<int> maxHeap;
+priority_queue<int,vector<int>,greater<int>> minHeap;
+
+void addNumber(int num){
+
+  //case 1 to add the element in the heap if both empty put in left heap
+  if (maxHeap.empty() && minHeap.empty())
+  {
+    maxHeap.push(num);
+  }
+  else{ //both not empty then check left k top se bda h th right m dal do
+    if (maxHeap.top()<num)
+    {
+        minHeap.push(num);
+    }
+    else{ //else left m thus do
+      maxHeap.push(num);
+    }
+    
+  }
+
+  //after insertion check balance any side do not have more diffrence then 1
+  int n = maxHeap.size();
+  int m = minHeap.size();
+
+  if (n - m == 2 || n - m ==-2)
+  {
+    if (n>m)
+    {
+      int element = maxHeap.top();
+      maxHeap.pop();
+      minHeap.push(element);
+    }
+    else{
+      int element = minHeap.top();
+      minHeap.pop();
+      maxHeap.push(element);
+    }
+    
+  }
+    
+}
+
+double findMedian(){
+  int n = maxHeap.size();
+  int m = minHeap.size();
+
+  if ((n+m)%2==0)
+  {
+    return ((double)maxHeap.top()+(double)minHeap.top())/2.0;
+  }
+  else{
+    if (n>m)
+    {
+      return maxHeap.top();
+    }
+    else{
+      return minHeap.top();
+    }
+    
+  }
+
+}
+
+
+vector<double> runningMedian(vector<int> vec){
+
+  vector<double> vecD;
+
+  for (int i = 0; i < vec.size(); i++)
+  {
+      addNumber(vec[i]);
+      vecD.push_back(findMedian());
+  }
+  
+  return vecD;
+}
+
+
+int main() {
+    /* Enter your code here. Read input from STDIN. Print output to STDOUT */   
+      vector<int> vec = {12, 4, 5, 3, 8, 7};
+
+      vector<double> vecD =  runningMedian(vec);
+
+       std::cout.precision(1);
+        std::cout.setf(std::ios::fixed);
+      for(auto x: vecD) {
+        cout<<x<<endl;
+      }
+
+
+
+
+    return 0;
+}
+???????????????????????????????????????????????????????
+//brute force O(n2)
+
+#include <cmath>
+#include <cstdio>
+#include <vector>
+#include <iostream>
+#include <algorithm>
+#include<set>
+using namespace std;
+
+
+
+int main() {
+    /* Enter your code here. Read input from STDIN. Print output to STDOUT */   
+    
+    vector<int> vec = {12,4,5,3,8,7};
+    vector<double> st;
+    vector<double> ans;
+    int n = vec.size();
+    
+    for (int i = 0; i < n; i++)
+    {
+        for (int j = 0; j <= i; j++)
+        {
+            
+            st.push_back((double)vec[j]);
+
+        }
+        sort(st.begin(), st.end());
+        if (st.size()==1)
+        {
+            double a = (double)st[0];
+            ans.push_back(a);
+        }
+        else if(st.size()%2==0 && st.size() > 1){
+            int med = st.size()/2;
+            double a = (double)(st[med-1]+st[med])/2;
+            ans.push_back(a);
+        }
+        else if(st.size()%2!=0 && st.size() > 1){
+            int med = st.size()/2;
+            double a = (double)st[med];
+            ans.push_back(a);
+        }
+        st.clear();
+ 
+    }
+
+    std::cout.precision(1);
+    std::cout.setf(std::ios::fixed);
+    for(double x : ans)cout<<x<<" ";
+    cout<<ans[0]<<endl;
+    double ab = 1.00;
+    cout<<ab<<endl;
+
+ 
+   
+    
+    
+    
+
+    return 0;
+}
+
+
+
+/*
+
+output
+
+12.0
+8.0
+5.0
+4.5
+5.0
+6.0
+
+
+*/

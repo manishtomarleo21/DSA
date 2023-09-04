@@ -1,0 +1,69 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+// Linked Representation of Binary Tree 
+
+struct Node
+{
+    int data;
+    struct Node *left;
+    struct Node *right; // this will look like [.|2| .] with left pointer, data and right pointer
+};
+
+struct Node * createNode(int data){
+    struct Node *n; //created node pointer
+    n = (struct Node *)malloc(sizeof(struct Node)); //allocated memory in the heap
+    n->left = NULL; //setting the pointer null initially
+    n->right = NULL;
+    n->data = data;
+
+    return n; //now we are returning the node
+}
+
+int main()
+{
+    /*
+    // to create a root node
+    // struct Node *p;
+    // p = (struct Node *)malloc(sizeof(struct Node));
+    // p->left = NULL;
+    // p->right = NULL;
+
+    //Created a parent first node which  we are connecntiong to the root node below
+    // struct Node *p1;
+    // p1 = (struct Node *)malloc(sizeof(struct Node));
+    // p1->left = NULL;
+    // p1->right = NULL;
+
+     //Created a parent second node which  we are connecntiong to the root node below
+    // struct Node *p2;
+    // p2 = (struct Node *)malloc(sizeof(struct Node));
+    // p2->left = NULL;
+    // p2->right = NULL;
+
+    // conneting the root node to the left and right children
+    // p->left = p1;
+    // p->left = p2;
+
+    */
+
+    //We can do this above way but but repeated lines of code not effective coding so we are making a function f
+    //for it check above create node
+
+    //Constructing the root node again with the function this time
+    struct Node * r = createNode(2); //root
+    struct Node * p1 = createNode(4); //parent 1
+    struct Node * p2 = createNode(5); //parent 2
+
+    // conneting the root node to the left and right children
+    r->left = p1;
+    r->left = p2;
+
+    printf("%d ", r->data);
+
+
+
+
+
+    return 0;
+}

@@ -1,0 +1,231 @@
+bool has_cycle(SinglyLinkedListNode* head) {
+    //Brute force
+    if (head == NULL)
+    {
+        return 0;
+    }
+    map<SinglyLinkedListNode*, bool> visited;
+    SinglyLinkedListNode* temp = head;
+
+    while (temp!=NULL)
+    {
+        if (visited[temp] == true)
+        {
+            return 1;
+        }
+        visited[temp] = true;
+        temp = temp->next;
+        
+    }
+    return 0;
+
+}//Only brute force ignore the above code whole code is below
+
+__________________________________________________________
+#include <bits/stdc++.h>
+#include<map>
+
+using namespace std;
+
+class SinglyLinkedListNode {
+    public:
+        int data;
+        SinglyLinkedListNode *next;
+
+        SinglyLinkedListNode(int node_data) {
+            this->data = node_data;
+            this->next = nullptr;
+        }
+};
+
+class SinglyLinkedList {
+    public:
+        SinglyLinkedListNode *head;
+        SinglyLinkedListNode *tail;
+
+        SinglyLinkedList() {
+            this->head = nullptr;
+            this->tail = nullptr;
+        }
+
+        void insert_node(int node_data) {
+            SinglyLinkedListNode* node = new SinglyLinkedListNode(node_data);
+
+            if (!this->head) {
+                this->head = node;
+            } else {
+                this->tail->next = node;
+            }
+
+            this->tail = node;
+        }
+};
+
+void print_singly_linked_list(SinglyLinkedListNode* node, string sep, ofstream& fout) {
+    while (node) {
+        fout << node->data;
+
+        node = node->next;
+
+        if (node) {
+            fout << sep;
+        }
+    }
+}
+
+void free_singly_linked_list(SinglyLinkedListNode* node) {
+    while (node) {
+        SinglyLinkedListNode* temp = node;
+        node = node->next;
+
+        free(temp);
+    }
+}
+
+// Complete the has_cycle function below.
+
+/*
+ * For your reference:
+ *
+ * SinglyLinkedListNode {
+ *     int data;
+ *     SinglyLinkedListNode* next;
+ * };
+ *
+ */
+//I m gonna use two approaches 
+//Brute force with time complexity O(n) and space complexity O(n)
+//2.Floyd's cycle detection mathod also giving the staring node of loop 
+//Break the loop also with time complexity O(n) and space complexity O(1)
+
+//FCD explain:- take two pointer fast and slow slow will move one pointer fast move two pointer 
+//When the meet at a point of intersecrtion means the list is loop
+//its only tell the its loop or not to get the starting node of the loop or from where loop is starting 
+//I will create another function cycleStartingNode
+//apporach is A is distance to staring point of loop b is the disteance dfrom the satring point of the loop to
+//intersection node and c is complete cyle
+//A+b = k*c so A is also the distance from the b to loop starting node 
+//Once we find intersection point we will put slow to satr again and put move fast from intersection point to 
+// /one by one only when they meet it will be the loop staring node
+
+SinglyLinkedListNode* cycleStartingNode(SinglyLinkedListNode* head, SinglyLinkedListNode* intersectPoint){
+    SinglyLinkedListNode* slow = head;
+    while (slow!=intersectPoint)
+    {
+        slow = slow->next;
+        intersectPoint = intersectPoint->next;
+    }
+    //As loop will break once they will meet at starting pint of the loop
+    cout<<slow->data<<endl;
+    return slow;
+    
+}
+
+//Now to break the loop we need node from where the loop is starting [cycleStartingNode] this function can 
+//return
+SinglyLinkedListNode*  breakLoop(SinglyLinkedListNode* head){
+     if (head == NULL)
+    {
+        return NULL;
+    }
+    SinglyLinkedListNode* temp = head;
+    while (temp->next!=head)
+    {
+        temp = temp->next;
+    }
+    //Now we have reached completed the cylead and stating to point at the loop node starting
+    //Loop has breoken now
+    temp->next = NULL;
+
+    return head;
+    
+}
+
+
+bool has_cycle(SinglyLinkedListNode* head) {
+    //Floyd's cycle detection algo
+    if (head == NULL)
+    {
+        return 0;
+    }
+    SinglyLinkedListNode* slow = head;
+    SinglyLinkedListNode* fast = head;
+
+    while (slow!=NULL && fast!=NULL)
+    {
+        fast = fast->next;
+        if (fast == NULL)
+        {
+
+            return 0;
+        }
+        fast = fast->next;
+        slow = slow->next;
+
+        if (slow == fast)
+        {
+            cycleStartingNode(head, fast);
+            return 1;
+        }
+        
+    }
+    
+
+    return 0;
+    
+   
+
+}
+
+int main()
+{
+    ofstream fout(getenv("OUTPUT_PATH"));
+
+    int tests;
+    cin >> tests;
+    cin.ignore(numeric_limits<streamsize>::max(), '\n');
+
+    for (int tests_itr = 0; tests_itr < tests; tests_itr++) {
+        int index;
+        cin >> index;
+        cin.ignore(numeric_limits<streamsize>::max(), '\n');
+
+        SinglyLinkedList* llist = new SinglyLinkedList();
+
+        int llist_count;
+        cin >> llist_count;
+        cin.ignore(numeric_limits<streamsize>::max(), '\n');
+
+        for (int i = 0; i < llist_count; i++) {
+            int llist_item;
+            cin >> llist_item;
+            cin.ignore(numeric_limits<streamsize>::max(), '\n');
+
+            llist->insert_node(llist_item);
+        }
+      
+      	SinglyLinkedListNode* extra = new SinglyLinkedListNode(-1);
+      	SinglyLinkedListNode* temp = llist->head;
+      
+      	for (int i = 0; i < llist_count; i++) {
+            if (i == index) {
+          		extra = temp;
+            }
+          	
+          	if (i != llist_count-1) {
+          		temp = temp->next;
+            }
+        }
+      
+      	temp->next = extra;
+
+        bool result = has_cycle(llist->head);
+
+        fout << result << "\n";
+    }
+
+    fout.close();
+
+    return 0;
+}
+

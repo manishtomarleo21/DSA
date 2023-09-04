@@ -1,0 +1,86 @@
+#include <iostream>
+
+using namespace std;
+
+class Stack
+{
+    public:
+    int top;
+    int size;
+    int *arr; //pointer array
+    Stack(int size){
+        this->size = size;
+        arr = new int[size];
+        top = -1;
+    }
+
+    void push(int element){
+        if(top == size-1){
+            cout<<"Stack Overflow"<<endl;
+        }
+        else{
+            top++;
+            arr[top] = element;
+        }
+    }
+    int pop(){
+        if(top<0){
+            cout<<"Stack UNderflow"<<endl;
+            return -1;
+        }else{
+            int val = arr[top];
+            top--;
+            return val;
+        }
+        
+    }
+
+    int isEmpty(){
+        if(top==-1) return 1;
+        else return 0;
+    }
+    int isFull(){
+        if(size-1==top) return 1;
+        else return 0;
+    }
+
+    int peek(int index){
+        if(isEmpty()){
+            return -1;
+        } 
+        else{
+            int arrInd = top-index+1;
+            return arr[arrInd];
+
+        }
+    }
+
+    void traversal(){
+        for (int i = top; i >= 0; i--)
+        {
+            cout<<arr[i]<<" ";
+        }
+        
+    }
+
+
+};
+
+
+int main()
+{
+    Stack st(10);
+
+    st.push(15);
+    st.push(18);
+    st.push(22);
+    st.push(29);
+
+    // cout<<st.pop()<<endl;
+    // cout<<st.peek(2)<<endl;
+    st.traversal();
+
+
+
+    return 0;
+}

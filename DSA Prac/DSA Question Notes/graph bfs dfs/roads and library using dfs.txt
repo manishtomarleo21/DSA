@@ -1,0 +1,96 @@
+#include <cmath>
+#include <cstdio>
+#include <vector>
+#include <iostream>
+#include <algorithm>
+#include<queue>
+using namespace std;
+
+//approach first creat graph from given vector of vector here we created a adjacency list
+//then find the sizes of all the components sizes
+// find minimu between building road and library cost
+
+
+int dfs(int vertex, vector<bool> &visited, vector<vector<int>> graph1){
+
+  visited[vertex] = true;
+  int ans = 1;
+  for(int child: graph1[vertex]){
+    if(visited[child]) continue;
+    ans+= dfs(child, visited, graph1);
+  }
+
+  // for(int i = 0; i < graph1[vertex].size(); i++){
+  //   if(!visited[graph1[vertex][i]]){
+  //     ans += dfs(graph1[vertex][i], visited, graph1);
+  //   }
+  // }
+  return ans;
+}
+
+long long int roadsAndLibraries(int n, int c_lib, int c_road, vector<vector<int>> cities){
+
+  vector<vector<int>> graph1(n+1);
+
+  for (int i = 0; i < cities.size(); i++)
+  {
+    graph1[cities[i][0]].push_back(cities[i][1]);
+    graph1[cities[i][1]].push_back(cities[i][0]);
+  }
+
+
+  vector<int> comp;
+  vector<bool> visited(n+1, false);
+
+  for (int i = 1; i <= n; i++)
+  {
+    if(graph1[i].size()>0 && !visited[i]){
+      comp.push_back(dfs(i, visited, graph1));
+    }
+    else if(graph1[i].size()==0){
+      comp.push_back(1);
+    }
+  }
+
+  long long int ans = 0;
+
+  for (int i = 0; i < comp.size(); i++)
+  {
+    ans += min((comp[i]-1)*c_road+c_lib, comp[i]*c_lib);
+  }
+  
+  return ans;
+  
+}
+
+
+int main() {
+   
+    int n = 5, m = 3, c_lib = 6, c_road = 1;
+
+   vector<vector<int>> cities = {
+    {1, 2},
+    {1, 3},
+    {1, 4}   
+   };
+
+   long long int ans = roadsAndLibraries(n, c_lib, c_road, cities);
+
+    cout<<ans<<endl;
+
+
+    return 0;
+}
+/*
+
+output
+
+12.0
+8.0
+5.0
+4.5
+5.0
+6.0
+
+
+*/

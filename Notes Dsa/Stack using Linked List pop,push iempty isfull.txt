@@ -1,0 +1,108 @@
+#include<stdio.h>
+#include<stdlib.h>
+
+//struct Node * top = NULL; //only for second method of pop function to avoid derefrencing
+//check vid 30 if confusion is Stack using Linked lISt pop function
+
+struct Node
+{
+    int data;
+    struct Node * next;
+};
+
+int isEmpty(struct Node * top){
+    if (top == NULL)
+    {
+        return 1;
+    }
+    return 0;
+    
+} 
+
+int isFull(struct Node * top){
+    struct Node * p = (struct Node *) malloc(sizeof(struct Node));
+    if (p==NULL)
+    {
+        return 1;
+    }
+    return 0;
+} 
+
+void linkedListTraversal(struct Node * ptr){
+    while (ptr != NULL)
+    {
+        printf("Element %d\n ", ptr->data);
+        ptr = ptr->next;
+    }
+    
+}
+
+struct Node * push(struct Node * top, int x){
+    if(isFull(top))
+    {
+        printf("Stack Overflow\n");
+    }
+    else{
+        struct Node * p = (struct Node *) malloc(sizeof(struct Node));
+        p->data = x;
+        p->next = top;
+        top = p;
+        return top;
+    }
+}
+
+//This also have another mathod
+int pop(struct Node ** top){ //derefrencing of the derefrencing pointer
+    if (isEmpty(*top))
+    {
+        printf("Stack Underflow\n");
+    }
+    else{
+        struct Node * p = *top;
+        *top = (*top)->next;
+        int x = p->data;
+        free(p);
+        return x;
+       
+    }    
+}
+//Alternate mathod for globale variable to avoid derencing complication
+int pop(struct Node * tp){ //change the name to something else from top
+    if (isEmpty(tp))
+    {
+        printf("Stack Underflow\n");
+    }
+    else{
+        struct Node * p = tp;
+        top = tp->next;
+        int x = p->data;
+        free(p);
+        return x;
+       
+    }    
+}
+
+
+
+int main()
+{
+    struct Node * top = NULL;
+    // int x;
+    top = push(top, 3);
+    top = push(top, 6);
+    top = push(top, 9);
+
+    //We are sending the address of the pointer to change the value if the funtion using it  check pop func
+    int element = pop(&top); //Sending the address of the function
+
+    //POP function is being tricky to use double pointer to avoid this and we can use the second method
+    //Which is make  the top pointer a global variable 
+    //see above
+    //2. only chabge the name in parameter when defining the function as it wont run
+
+
+    printf("Popped Element is %d\n ", element);
+    linkedListTraversal(top);
+
+    return 0;
+}

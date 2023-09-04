@@ -1,0 +1,134 @@
+#include<iostream>
+#include<queue>
+
+using namespace std;
+
+class Node
+{
+    public:
+        int data;
+        Node* left;
+        Node* right;
+        Node(int d){
+            this->data = d;
+            this->left = NULL;
+            this->right = right;
+        }
+};
+
+
+Node* buildTree(Node* root){
+    cout<<"Enter the data: "<<endl;
+    int data;
+    cin>>data;
+
+    root = new Node(data);
+
+    if (data == -1)
+    {
+        return NULL;
+    }
+    else{
+        cout<<"Enter the data for left of  "<<root->data<<endl;
+        root->left = buildTree(root->left);
+
+        cout<<"Enter the data for right of  "<<root->data<<endl;
+        root->right = buildTree(root->right);
+
+    }
+    return root;
+}
+    
+void levelOrderTraversal(Node* root){
+    if (root == NULL)
+    {
+        return;
+    }
+    queue<Node*>q;
+    q.push(root);
+    
+    
+    while (!q.empty())
+    {
+        Node* temp = q.front();
+        cout<<temp->data<<" ";
+        q.pop();
+
+        if(temp->left!=NULL){
+            q.push(temp->left);
+        }
+        if(temp->right!=NULL){
+            q.push(temp->right);
+        }
+    }
+    
+
+    
+
+}
+//Also called spiral traversal from left to righ nodes of the level
+//then in second level right to left can done with the help of levelordertraversal and quque
+vector<int> zigZagTraversal(Node* root){
+    vector<int> results;
+    if (root == NULL)
+    {
+        return results;
+    }
+    queue<Node*> q;
+    q.push(root);
+    bool leftToRight = true;
+
+    while (!q.empty())
+    {
+        int size = q.size();
+        vector<int> ans(size);
+
+        for (int i = 0; i < size; i++)
+        {
+            Node* frontNode = q.front();
+            q.pop();
+
+            int index = leftToRight?i:size-i-1;
+            ans[index] = frontNode->data;
+
+            if (frontNode->left)
+            {
+                q.push(frontNode->left);
+            }
+            if (frontNode->right)
+            {
+                q.push(frontNode->right);
+            }
+            
+
+        }
+        //directional change
+        leftToRight = !leftToRight;
+        
+        for(auto x : ans){
+            results.push_back(x);
+        }
+                
+    }
+    for(auto x : results){
+            cout<<x<<" ";
+        }
+    return results;
+    
+    
+}
+
+
+int main()
+{
+    Node* root = NULL;
+    root = buildTree(root);
+    levelOrderTraversal(root);
+
+    cout<<"printing zigzag "<<endl;
+    zigZagTraversal(root);
+    
+
+    return 0;
+}
+// 10 5 2 -1 -1 7 -1 -1 11 -1 -1 

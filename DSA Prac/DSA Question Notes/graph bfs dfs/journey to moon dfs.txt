@@ -1,0 +1,87 @@
+#include <iostream>
+#include <vector>
+#include <string>
+using namespace std;
+
+// int factorial(int n){
+//     if(n==0) return 1;
+//     int factorial = 1;
+//     for (int i = 2; i <= n ; i++)
+//     {
+//         factorial*=i;
+//     }
+//     return factorial;
+    
+// }
+
+// int nCr(int n, int r){
+//     return factorial(n)/(factorial(r)*factorial(n-r));
+// }
+
+int dfs(int vertex, vector<bool> &visited, vector<vector<int>> &graph1){
+
+    visited[vertex] = true;
+    int ans = 1;
+    for(int child : graph1[vertex]){
+        if(visited[child]) continue;
+        ans+=dfs(child, visited, graph1);
+    }
+    return ans;
+}
+
+int journeyToMoon(int n, vector<vector<int>> astronaut){
+    vector<vector<int>> graph1(n);
+    for (int i = 0; i < astronaut.size(); i++)
+    {
+        graph1[astronaut[i][0]].push_back(astronaut[i][1]);
+        graph1[astronaut[i][1]].push_back(astronaut[i][0]);
+
+    }
+
+    vector<int> comp;
+    vector<bool> visited(n, false);
+    for (int i = 0; i < n; i++)
+    {
+        if(graph1[i].size()>0 && !visited[i]){
+            comp.push_back(dfs(i, visited, graph1));
+        }
+        else if(graph1[i].size()==0) comp.push_back(1);
+    }
+    
+    int total_comb = (n*(n-1))/2;
+    for (int i = 0; i < comp.size(); i++)
+    {
+        total_comb-=(comp[i]*(comp[i]-1))/2;
+    }
+    return total_comb;
+    
+    
+}
+
+int main() {
+  
+    int n = 5, m = 3;
+
+    vector<vector<int>> astronaut = {{0, 1}, {2, 3}, {0, 4}};
+    // vector<vector<int>> astronaut;
+
+    int ans = journeyToMoon(n, astronaut);
+    cout<<ans<<endl;
+
+    // int n, m;
+    // cin>>n>>m;
+    // for (int i = 0; i < m; i++)
+    // {
+    //     int v1, v2;
+    //     cin>>v1, v2;
+    //     astronaut[i][0] = v1;
+    //     astronaut[i][1] = v2;
+
+    // }
+    
+
+
+    return 0;
+}
+
+

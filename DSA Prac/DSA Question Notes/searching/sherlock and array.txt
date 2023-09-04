@@ -1,0 +1,50 @@
+#include <set>
+#include <iostream>
+#include <algorithm>
+#include <bits/stdc++.h>
+#include <stack>
+#include <cstring>
+#include <string>
+
+using namespace std;
+
+string insertionSort(vector<int> arr) { //small big
+ 
+   int sum = 0;
+   for (int i = 0; i < arr.size(); i++)
+   {
+      sum+=arr[i];
+   }
+   // cout<<sum<<endl;
+   int j = 0;
+   int sumX= 0;
+   
+   for (int i = 0; i < arr.size(); i++)
+   {
+      sum-=arr[i];
+
+      if(sumX == sum) return "YES";
+      sumX+=arr[i];
+   }
+   
+   return "NO";
+   
+
+  
+}
+
+
+int main()
+{
+
+  vector<int> arr = {2, 0, 0, 0};
+//   vector<int> brr = {11, 4, 11, 7, 3, 7, 10, 13, 4, 8, 12, 11, 10, 14, 12};
+  
+  
+  string ab  = insertionSort(arr);
+  cout<<ab<<endl;
+ 
+
+
+  return 0;
+}

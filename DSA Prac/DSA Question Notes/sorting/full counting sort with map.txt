@@ -1,0 +1,53 @@
+#include <set>
+#include <iostream>
+#include <algorithm>
+#include <bits/stdc++.h>
+#include <stack>
+#include <cstring>
+#include <string>
+
+using namespace std;
+
+void countSort(vector<vector<string>> &arr) {
+
+ map<int, vector<string>> mp;
+ for (int i = 0; i < arr.size(); i++)
+ {
+    mp[stoi(arr[i][0])].push_back(arr[i][1]);
+ }
+ 
+  for (int i = 0; i < mp.size(); i++)
+  {
+    for (int j = 0; j < mp[i].size(); j++)
+    {
+      cout<<mp[i][j]<<" ";
+    }
+    
+  }
+  
+  
+}
+
+
+int main()
+{
+
+  // int n = 15;
+  vector<vector<string>> vec = {{"0", "a"}, {"1", "b"}, {"0", "c"}, {"1", "d"}};
+  for (int i = 0; i < vec.size()/2; i++)
+  {
+      vec[i][1] = 45; //"for dash ascii value - this is 45"
+  }
+  
+ 
+  countSort(vec);
+  // for (int i = 0; i < vec.size(); i++)
+  // {
+  //   cout<<vec[i].second<<" ";
+  // }
+  
+
+
+
+  return 0;
+}

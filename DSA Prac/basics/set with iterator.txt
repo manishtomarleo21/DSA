@@ -1,0 +1,41 @@
+#include <cmath>
+#include <cstdio>
+#include <vector>
+#include <iostream>
+#include <set>
+#include <algorithm>
+using namespace std;
+
+
+int main() {
+    /* Enter your code here. Read input from STDIN. Print output to STDOUT */   
+	int n,q,a;
+	cin>>n;
+
+	set<int> st;
+
+	while (n--)
+	{
+		cin>>q;
+		if(q==1){
+			cin>>a;
+			st.insert(a);
+		}
+		else if(q==2){
+			cin>>a;
+			st.erase(a);
+		}
+		else if(q==3){
+			cin>>a;
+			auto it = st.find(a);
+			if((*it) == a) cout<<"Yes"<<endl;
+			else{
+				cout<<"No"<<endl;
+			}
+		}
+	}
+	
+
+
+    return 0;
+}

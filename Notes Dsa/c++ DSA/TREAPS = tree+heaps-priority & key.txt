@@ -1,0 +1,178 @@
+#include<iostream>
+#include<cstdlib>
+// #include<ctime>
+
+using namespace std;
+
+class TreapNode
+{
+    public:
+        int data;
+        int priority;
+        TreapNode* left;
+        TreapNode* right;
+        TreapNode(int d){
+            this->data = d;
+            this->priority = rand() % 100;
+            this->left = NULL;
+            this->right = NULL;
+            
+        }
+};
+
+TreapNode* rotateLeft(TreapNode* x){
+    TreapNode* y  = x->right;
+    TreapNode* T2 = y->left;
+
+    //rotate
+    y->left = x;
+    x->right = T2;
+
+    return y;
+}
+
+TreapNode* rotateRight(TreapNode* y){
+    TreapNode* x = y->left;
+    TreapNode* T2 = x->right;
+
+    // rotate 
+    x->right = y;
+    y->left = T2;
+
+    return x;
+}
+
+TreapNode* insertNode(TreapNode* root, int d){
+    if (root==NULL)
+    {
+        root = new TreapNode(d);
+        return root;
+    }
+    if(d < root->data){
+        root->left = insertNode(root->left, d);
+        if (root->left!=NULL && root->left->priority > root->priority)
+        {
+            root = rotateRight(root);
+        }
+        
+    }else{
+        root->right =  insertNode(root->right, d);
+        if(root->right!=NULL && root->right->priority > root->priority){
+            root = rotateLeft(root);
+        }
+    }
+
+   return root; 
+}
+
+bool searchNode(TreapNode* root, int key){
+    if (root == NULL)
+    {
+        return 0;
+    }
+    if(root->data == key){
+        return 1;
+    }
+    if(key < root->data)
+        return searchNode(root->left, key);
+        return searchNode(root->right, key);
+    
+}
+
+void deleteNode(TreapNode* &root, int key){
+    //for the leaf nodes
+    if (root == NULL)
+    {
+        return ;
+    }
+    if(key < root->data){
+        deleteNode(root->left, key);
+    }
+    else if(key > root->data){
+        deleteNode(root->right, key);
+    }
+    //for the node which has two children
+    else{
+        if(root->left==NULL && root->right==NULL){
+            delete root;
+        }
+        else if(root->left && root->right){ //!=NULL
+            if (root->left->priority < root->right->priority)
+            {
+               root = rotateLeft(root);
+               deleteNode(root->left, key);
+            }
+            else{
+                root = rotateRight(root);
+                deleteNode(root->right, key);
+            }
+            
+        }
+        //Node to be deleted with the one child only
+        else{
+            TreapNode* child = (root->left)?root->left:root->right;
+            TreapNode* curr = root;
+            root = child;
+            delete curr;
+        }   
+    }
+
+}
+
+void displayTree(TreapNode* root, int space = 0, int height =10){
+    if(root == nullptr){
+        return;
+    }
+    space+=height;
+    displayTree(root->left, space); //height i dont have to define as i define alredy while declaring
+    cout<<endl;
+
+    for (int i = height; i < space; i++)
+    cout<< ' ';
+    cout<<root->data<< "("<<root->priority<<")\n";
+    cout<<endl;
+    displayTree(root->right, space);
+    
+
+}
+
+int main(){
+
+    int nums[] = {1,7,6,4,3,2,8,9,10};
+    int a = sizeof(nums)/sizeof(int);//getting num array length
+    TreapNode* root = NULL;
+
+    srand(time(NULL));
+
+    for(int n : nums){
+        root = insertNode(root, n);
+    }
+    cout<<"Constructed Treap:\n\n";
+    displayTree(root);
+
+
+    return 0;
+}
+
+
+//also check order statistics tree or B-tree
+
+
+
+
+
+
+
+
+/*
+                    y                                      x
+                /     \        <<==== Left roated       /    \
+              x        T3                              T1    y
+            /  \               Right rotated ====>>        /   \
+           T1   T2                                        T2    T3
+
+
+
+
+
+*/

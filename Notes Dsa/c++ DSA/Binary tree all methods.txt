@@ -1,0 +1,206 @@
+#include <iostream>
+#include <queue>
+
+using namespace std;
+
+class Node
+{
+public:
+    int data;
+    Node *left;
+    Node *right;
+
+    Node(int d)
+    {
+        this->data = d;
+        this->left = NULL;
+        this->right = NULL;
+    }
+};
+
+Node *buildTree(Node *root)
+{
+    cout << "Enter the data : " << endl;
+    int data;
+    cin >> data;
+
+    root = new Node(data);
+
+    if (data == -1)
+    {
+        return NULL;
+    }
+
+    cout << "Enter the data to insert in the left of  " << data << endl;
+    root->left = buildTree(root->left);
+    cout << "Enter the data to insert in the right " << data << endl;
+    root->right = buildTree(root->right);
+
+    return root;
+}
+// Level order traversal with queue STL
+// 1 will print root then in next level it will print all parents and then all childrens it goes by level
+void levelOrderTraversal(Node *root)
+{
+    queue<Node *> q;
+    q.push(root);
+
+    while (!q.empty())
+    {
+        Node *temp = q.front(); // will pick first root
+        cout << temp->data << " ";
+        q.pop(); // remove the root from front
+
+        if (temp->left != NULL) // is not NULL
+        {
+            q.push(temp->left); // for the left node
+        }
+        if (temp->right != NULL) // is not NULL
+        {
+            q.push(temp->right); // for the left node
+        }
+    }
+}
+
+// levelOrderTraversalwith the seperator with print by level order and seperate the level by enter in print
+void levelOrderTraversalwithSeperator(Node *root)
+{
+    queue<Node *> q;
+    q.push(root);
+    q.push(NULL); // for level sepeprat (enter)
+
+    while (!q.empty())
+    {
+        Node *temp = q.front(); // will pick first root
+        
+        q.pop(); // remove the root from front
+
+        if (temp == NULL)
+        {
+            cout << endl;
+            if (!q.empty())
+            {
+                q.push(NULL);
+            }
+        }
+        else
+        {
+            cout << temp->data << " ";
+            if (temp->left != NULL) // is not NULL
+            {
+                q.push(temp->left); // for the left node
+            }
+            if (temp->right != NULL) // is not NULL
+            {
+                q.push(temp->right); // for the left node
+            }
+        }
+    }
+}
+
+void inOrderTraversal(Node* root){
+    if (root == NULL)
+    {
+        return ;
+    }
+    
+    else
+    {
+        inOrderTraversal(root->left);
+        cout<<root->data<<" ";
+        inOrderTraversal(root->right);
+    }
+    
+}
+void preOrderTraversal(Node* root){
+    if (root == NULL)
+    {
+        return ;
+    }
+    
+    else
+    {
+        cout<<root->data<<" ";
+        inOrderTraversal(root->left);
+        inOrderTraversal(root->right);
+    }
+    
+}
+void postOrderTraversal(Node* root){
+    if (root == NULL)
+    {
+        return ;
+    }
+    
+    else
+    {
+        inOrderTraversal(root->left);
+        inOrderTraversal(root->right);
+        cout<<root->data<<" ";
+    }
+    
+}
+//We have given a level order data printed now make it a binary tree from that
+void buildTreefromLevelOrder(Node* &root){ //&root refrence so i caN change original root
+    queue<Node*> q; //level order can done by only queue so master queue for that
+    cout<<"Enter the data for the root "<<endl;
+    int data;
+    cin>>data;
+    root = new Node(data);
+    q.push(root); 
+
+    while (!q.empty())
+    {
+        Node* temp = q.front();
+        q.pop();
+
+        cout<<"Enter the left node for "<<temp->data<<endl;
+        int leftdata;
+        cin>>leftdata;
+
+        if (leftdata != -1)
+        {
+            temp->left = new Node(leftdata);
+            q.push(temp->left);
+        }
+
+        cout<<"Enter the right node for "<<temp->data<<endl;
+        int rightdata;
+        cin>>rightdata;
+
+        if (rightdata != -1)
+        {
+            temp->right = new Node(rightdata);
+            q.push(temp->right);
+        }
+        
+
+    }
+
+}
+
+
+
+
+int main()
+{
+    Node *root = NULL;
+
+    // root = buildTree(root); //this for all of the function commmenting just for buildfromLevelorder
+
+    // printing the node in level order
+    // cout << "printing" << endl;
+    // levelOrderTraversal(root);
+    // levelOrderTraversalwithSeperator(root);
+
+    //10 5 2 -1 -1 7 -1 -1 11 -1 -1
+    // inOrderTraversal(root);
+
+
+    // for buildorderlevel which takes an empty root
+    // as firs line of main
+    buildTreefromLevelOrder(root);
+
+
+    return 0;
+}

@@ -1,0 +1,93 @@
+#include<stdio.h>
+#include<stdlib.h>
+
+struct CircularQueue
+{
+    int size;
+    int r; //rear tracker for index when pushing it goes up,, initially -1
+    int f; // for front when we pop the element from the CircularQueue it goes up the 1
+    int * arr;
+};
+
+int isFull(struct CircularQueue * q){
+    if ((q->r+1)%q->size == q->f) //it will go back to zero index from thr last index suppose it 0 to 5 after
+    {                              //IT WILL be goes to zero again to keep the all spaces occupy  
+        return 1;
+    }
+    return 0;
+    
+}
+
+int isEmpty(struct CircularQueue * q){
+    if (q->r == q->f)
+    {
+        return 1;
+    }
+    return 0;
+    
+}
+
+
+
+void enqueue(struct CircularQueue * q, int val){
+    if (isFull(q))
+    {
+        printf("This CircularQueue is Full");
+    }
+    else{
+        q->r = (q->r+1)%q->size;
+        q->arr[q->r] = val;
+        printf("Enqueue the element %d\n", val);
+    }
+    
+}
+
+int dequeue(struct CircularQueue * q){
+    int a =-1;
+    if (isEmpty(q))
+    {
+        printf("This CircularQueue is empty");
+    }
+    else{
+        q->f = (q->f+1)%q->size;
+        a = q->arr[q->f];
+    }
+    return a;
+}   
+
+int main()
+{
+    struct CircularQueue q;
+    q.size = 4;
+    q.r = q.f = 0;
+    q.arr = (int*) malloc(q.size * sizeof(int));
+
+    
+
+    if (isEmpty(&q))
+    {
+        printf("The CircularQueue is Empty\n");
+    }
+    
+    //EnCircularQueue few elelments in the CircularQueue using array inshort means adding elements
+    enqueue(&q, 3); //Here i made q struct without pointer so passing the &for the address
+    enqueue(&q, 6); 
+    enqueue(&q, 9); 
+
+    //Dequeuing value means that we are poping the value from the  CircularQueue from the top
+    printf("Dequeing the element %d\n", dequeue(&q));
+    printf("Dequeing the element %d\n", dequeue(&q));
+
+    if (isFull(&q))
+    {
+        printf("The CircularQueue is Full");
+    }
+
+    enqueue(&q, 12); 
+    enqueue(&q, 9); 
+
+
+
+
+    return 0;
+}

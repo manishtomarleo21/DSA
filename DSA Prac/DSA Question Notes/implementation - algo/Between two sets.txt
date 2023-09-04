@@ -1,0 +1,52 @@
+#include <set>
+#include <iostream>
+#include <algorithm>
+
+//Hackerrank question 
+//BETWEEN TWO SETS
+//SOLVE BY GCD AND LCM ALGO
+
+using namespace std;
+
+int main()
+{
+
+    //algo to solve this first we are findin the LCM of first array
+    //second we are finding the gcd for the second array
+    // now we check the multiple of lcm till gcd which can divide gcd and store the result
+    //this will the common factors which also multiple
+    
+
+
+  vector<int> a = {2,4};
+  vector<int> b = {16, 32, 96};
+
+    int result = 0;
+    // get lcm
+    int lcm = a[0];
+    for (int i = 1; i < a.size(); i++)
+    {
+        lcm = lcm*a[i]/__gcd(lcm, a[i]);
+    }
+
+    //get gcd
+    int gcd = b[0];
+    for (int i = 1; i < b.size(); i++)
+    {
+        gcd = __gcd(gcd, b[i]);
+    }
+    
+    
+    //count multiple of lcm that divide the gcd
+    int multiple = 0;
+    while (multiple <= gcd)
+    {
+        multiple+=lcm;
+
+        if(gcd%multiple == 0) result++;
+    }
+    
+    cout<<result;
+
+    return 0;
+}

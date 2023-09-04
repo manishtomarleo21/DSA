@@ -1,0 +1,61 @@
+#include <cmath>
+#include <cstdio>
+#include <vector>
+#include <iostream>
+#include <algorithm>
+using namespace std;
+
+int main()
+{
+    int n, element, qr, elem2; //Number of the element
+    cin>>n;
+
+    vector<int> vec1;
+
+    for (int i = 0; i < n; i++)
+    {
+        cin>>element;
+        vec1.push_back(element);
+    }
+    
+    cin>>qr;
+    vector<int> vec2;
+
+    for (int i = 0; i < qr; i++)
+    {
+        cin>>elem2;
+        vec2.push_back(elem2);
+    }
+    
+    for (int i = 0; i < qr; i++)
+    {
+        auto it = lower_bound(vec1.begin(), vec1.end(), vec2[i]); //iterator
+        if (*it == vec2[i])
+        {
+            cout<<"Yes "<<it-vec1.begin()+1<<endl;
+        }
+        else if(*it > vec2[i]){
+            cout<<"No "<<it-vec1.begin()+1<<endl; // cam get the index by this<<endl;
+        }
+       
+    }
+    
+    /*
+ 8
+ 1 1 2 2 6 9 9 15
+ 4
+ 1
+ 4
+ 9
+ 15
+
+
+    */
+    
+    
+    
+    
+
+
+    return 0;
+}

@@ -1,0 +1,59 @@
+#include<stdio.h>
+
+void printArray(int *A, int n){
+    for (int i = 0; i < n; i++)
+    {
+        printf("%d ", A[i]);
+    }
+    printf("\n");
+}
+
+void bubbleSort(int *A, int n){
+    int temp;
+    int isSorted = 0; //We will check if sorted then we will stop the loop in one pass only no need to run all 
+
+    //For loop for the number of passes that we have seen in the vid it will run till n-1 as n-1 comaprision
+    //where n is the length of the array
+    for (int i = 0; i < n-1; i++) //this will run no of pass
+    {
+        printf("Workin on a pass number %d\n", i+1);
+        isSorted = 1; //If the loop does not ennter in the below condotion means its sorted so we said true
+
+        for (int j = 0; j < n-1-i; j++) //for comaprision in each pass. Comaprision will decrease as pass increase
+        {                               //check in dianry for 2nd pass comapr will be n-2 or 4 for 3rd it will n-3    
+            if (A[j] > A[j+1])
+            {
+                //Swap the element
+                temp = A[j];
+                A[j] = A[j+1];
+                A[j+1] = temp;
+                isSorted = 0; //If it entered menas its not sorted now we gonna put a condition below
+            }
+            
+        }
+        if (isSorted)
+        {
+            return;
+        }
+        
+        
+    }
+    
+}
+
+int main()
+{
+    int A[] = {12, 54, 65, 7, 23, 8};
+    // int A[] = {7, 8, 12, 23, 54, 65};
+
+    int n = 6; //length of array
+
+    printArray(A, n); //Printing the array before the bubble sort
+    bubbleSort(A, n); //BubbleSort
+    printArray(A, n); //Printing the array after the bubble sort
+
+    //Another array which is sorted to make it adaptive which is not by default
+
+
+    return 0;
+}

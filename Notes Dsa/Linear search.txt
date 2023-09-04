@@ -1,0 +1,28 @@
+#include<stdio.h>
+
+
+//If the array is unsorted than we gonna do a linear search which have time complexity of Big of n
+
+int linearsearch(int arr[], int size, int element){
+    for (int i = 0; i < size; i++)
+    {
+        if (arr[i]==element)
+        {
+            return i;
+        }
+       
+    }
+    return -1;
+    
+}
+
+int main()
+{
+    int arr[] = {1, 15, 78, 56, 66, 48, 32, 79};
+    //to get the length of an array
+    int size = sizeof(arr)/sizeof(int);
+
+    int search = linearsearch(arr, size, 78);
+    printf("The value found at index %d", search);
+    return 0;
+}

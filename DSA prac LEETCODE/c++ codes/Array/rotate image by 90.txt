@@ -1,0 +1,51 @@
+#include<iostream>
+#include<map>
+#include <unordered_map>
+#include<vector>
+#include <numeric>
+#include <set>
+#include <algorithm>
+
+using namespace std;
+
+
+int main()
+{
+
+  // vector<vector<int>> vec = {{1,2,3, 4},{5,6, 7, 8},{9,10,11, 12}};
+  vector<vector<int>> vec = {{1,2,3},{4, 5, 6, },{7, 8, 9}};
+  // vector<int> ans = {1,8,6,2,5,4,8,3,7};
+
+  //transpose
+  
+  for (int i = 0; i < vec.size(); i++)
+  {
+    for (int j = 0; j < i; j++)
+    {
+      swap(vec[i][j], vec[j][i]);
+    }
+  }
+
+  // reverse the row to get the result
+
+  for (int i = 0; i < vec.size(); i++)
+  {
+    reverse(vec[i].begin(), vec[i].end());
+  }
+  
+
+  for(auto x: vec){
+    for(int s: x){
+      cout<<s<<" ";
+    }
+    cout<<endl;
+  }
+  
+  
+
+  
+
+
+ 
+  return 0;
+}

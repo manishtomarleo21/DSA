@@ -1,0 +1,57 @@
+void inOrderTraversal2(Node* root, Node* prev, int &f){
+    if (root == NULL)
+    {
+        return ;
+    }
+    inOrderTraversal2(root->left, prev, f);
+    if (prev!=NULL && root->data <= prev->data)
+    {
+        f=0;
+        return;
+    }
+    if (prev!=NULL && root->data == prev->data)
+    {
+        f=0;
+        return;
+    }
+
+    prev = root;
+    inOrderTraversal2(root->right, prev, f);
+
+    
+}
+
+bool checkBst(Node* root){
+    int f = 1;
+    Node * prev = NULL;
+    inOrderTraversal2(root, prev, f);
+
+    return f;
+
+}
+///Above one is correct but fails in some cases so correct one belows
+bool checkBst(Node* root, int min, int max){
+   
+   if (root == NULL)
+   {
+        return 1; // for leaf node 
+   }
+   if (root->data < min || root->data > max)
+   {
+        return 0;
+   }
+   return checkBst(root->left ,min , root->data-1) && checkBst(root->right , root->data+1 , max);
+   //Explaination we are putting ranges in left side the range betwen min to root ka data
+   // and minus coz we wanna put range between a less than a value so it wont get us dupliacte
+   // 1-50 if the val is 50 so we put range in 1-49 and just oppposite one plus in right side
+   //as right side value is 1 bigger than alwasy with the node
+   
+   
+    
+}
+//both func are connected with the same calling one to another
+bool checkBst(Node* root){
+
+    return checkBst(root, 0, 10000); //root min max
+
+}

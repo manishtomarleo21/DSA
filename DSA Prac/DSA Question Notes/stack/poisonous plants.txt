@@ -1,0 +1,131 @@
+#include <cmath>
+#include <cstdio>
+#include <vector>
+#include <iostream>
+#include <algorithm>
+#include <stack>
+#include <sstream>
+using namespace std;
+
+
+
+
+int main()
+{
+int n;
+cin>>n;
+
+int* p = new int[n];
+for(int i=0;i<n;i++)
+    cin>>p[i];
+
+int* days = new int[n]();
+int min = p[0];
+int max = 0;
+stack<int> s;
+
+s.push(0);
+
+for(int i=1;i<n;i++)
+    {
+
+    if(p[i] > p[i-1])
+        days[i] = 1;
+
+    min = min < p[i]?min:p[i];
+
+    while(!s.empty() && p[s.top()] >= p[i])
+     {
+       if(p[i] > min)
+       days[i] = days[i] > days[s.top()] + 1?days[i]:days[s.top()] + 1;
+
+        s.pop();
+   }  
+
+    max = max>days[i]?max:days[i];
+    s.push(i);
+}
+
+cout<<max<<endl;
+return 0;
+}
+
+/*
+7    
+6, 5, 8, 4, 7, 10, 9
+
+
+*/
+
+//my approach
+#include <bits/stdc++.h>
+#include <sstream>
+
+using namespace std;
+
+int main()
+{
+
+    vector<int> vec = {6, 5, 8, 4, 7, 10, 9};
+    stack<int> givenStack;
+    for (int i = vec.size() - 1; i >= 0; i--)
+    {
+        givenStack.push(vec[i]);
+    }
+    vec.clear();
+    int days = 0;
+    while (!givenStack.empty())
+    {
+        int temp = givenStack.top();
+
+        givenStack.pop();
+        
+        if (givenStack.empty())
+        {
+            days++;
+            vec.push_back(temp);
+            for (int i = vec.size() - 1; i >= 0; i--)
+            {
+                givenStack.push(vec[i]);
+            }
+            temp = -1;
+            vec.clear();
+            // break;
+        }
+
+        if (givenStack.top() > temp && !givenStack.empty() && temp!=-1)
+        {
+            // here right bigger value will die
+            vec.push_back(temp);
+            givenStack.pop();
+        }
+        else
+        {
+            if (temp!=-1)
+            {
+                vec.push_back(temp);
+            }
+            
+            
+        }
+        // if(givenStack.empty()){
+        //     break;
+        // }
+        
+    }
+
+    for (auto x : vec)
+    {
+        cout << x << " ";
+    }
+     cout << days << " ";
+
+
+    return 0;
+}
+
+/*
+5 1
+3 6 2 7 5
+
+*/

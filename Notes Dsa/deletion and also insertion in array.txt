@@ -1,0 +1,71 @@
+#include<stdio.h>
+
+//Traversal of an Array
+void display(int arr[], int n){
+    for (int i = 0; i < n; i++)
+    {
+        printf("%d ", arr[i]);
+    }
+    printf("\n");
+}
+
+
+//************INSERTION IN ARRAY***************
+
+//To insert the elelment in the array we need size of the array capacity of the array index we where we gonna
+//put the element 
+//1. make a fuction who takes all the element mention above 
+//2. put a condition if the capacity have reaached the limit 
+//3. make a loop to insert on from decreasing war from last index to 0
+//4. i = size - 1 coz we need index and index start from 0 to 4 and lenght is 5 so size is -1
+//5. i >= index coz we want it to stop travesering till this element as soon and
+//we are shifting every element like arr[i+1]= a[i]
+//6. in the last when all are shifted and made an space for the index put value in the 
+//arr[index] = element
+
+int index_inserstion(int arr[], int size, int element, int index, int capacity){
+
+    if (size>=capacity)
+    {
+        return -1;
+    }
+    for (int i = size-1; i >= index; i--)
+    {
+        arr[i+1] = arr[i];
+    }
+    arr[index] = element;
+    return 1;
+    
+    
+}
+//DELETION in as array
+//1. i starting from the index which we want to remove from the element 
+//2. to now shfting the values to arr[i] whioc satring from the index plus arr[i+1]value like index[2] = index[3]
+
+void index_deletion(int arr[], int size, int element, int index){
+    for (int i = index; i <= size-1; i++)
+    {
+        arr[i] = arr[i+1];        
+    }
+    
+}
+
+
+int main()
+{
+    
+    int arr[20] = {1, 5, 7, 9, 10}; 
+    int size = 5, element = 8, index = 3, capacity = 20;   
+    display(arr, size);
+    index_inserstion(arr, size, element, index, capacity);
+    size+=1; //we have increased the size of the arraay as after the insertion in the array the size of 
+    // the array has been increased keep on remember that
+    display(arr,size);
+
+    index_deletion(arr, size, element, index);
+    size-=1;//we have decreased the size of the arraay as after the deletion in the array the size of 
+    // the array has been decreased by onr after deletion of one element keep on remember that
+    display(arr,size);
+
+    return 0;
+}

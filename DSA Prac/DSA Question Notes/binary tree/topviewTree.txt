@@ -1,0 +1,226 @@
+#include<iostream>
+#include<queue>
+#include<algorithm>
+#include<map>
+
+using namespace std;
+
+class Node
+{
+    public:
+        int data;
+        Node* left;
+        Node* right;
+        Node(int d){
+            this->data = d;
+            this->left = NULL;
+            this->right = right;
+        }
+};
+
+
+Node* buildTree(Node* root){
+    cout<<"Enter the data: "<<endl;
+    int data;
+    cin>>data;
+
+    root = new Node(data);
+
+    if (data == -1)
+    {
+        return NULL;
+    }
+    else{
+        cout<<"Enter the data for left of  "<<root->data<<endl;
+        root->left = buildTree(root->left);
+
+        cout<<"Enter the data for right of  "<<root->data<<endl;
+        root->right = buildTree(root->right);
+
+    }
+    return root;
+}
+
+vector<vector<int>> advLvel(Node* root){ // for pracitce i wrote again  below is the same func of level 
+    vector<vector<int>> ans;
+    queue<Node*> q;
+    if (root == NULL)
+    {
+        return ans;
+    }
+    q.push(root);
+
+    while (1)
+    {
+        int size = q.size();
+        if (size == 0)
+        {
+            return ans;
+        }
+        vector<int> data;
+        while (size>0)
+        {
+            Node* temp = q.front();
+            q.pop();
+
+            data.push_back(temp->data);
+            if (temp->left !=NULL)
+            {
+                q.push(temp->left);
+            }
+            if (temp->right !=NULL)
+            {
+                q.push(temp->right);
+            }
+            size--;    
+        }
+        ans.push_back(data); //this will put in level by level like 10 then endl then 15 12 and theur child
+        
+    }
+    return ans;
+    
+    
+}
+
+    
+void levelOrderTraversal(Node* root){
+    if (root == NULL)
+    {
+        return;
+    }
+    queue<Node*>q;
+    q.push(root);
+    
+    
+    while (!q.empty())
+    {
+        Node* temp = q.front();
+        cout<<temp->data<<" ";
+        q.pop();
+
+        if(temp->left!=NULL){
+            q.push(temp->left);
+        }
+        if(temp->right!=NULL){
+            q.push(temp->right);
+        }
+    }
+    
+
+    
+
+}
+
+vector<vector<int>> levelOrderTraversalAdv(Node* root){
+    vector<vector<int>> ans;
+    queue<Node*> q;
+    q.push(root);
+
+    if (root == NULL)
+    {
+        return ans;
+    }
+    while (1) //basically infite loop but we will put a condition to break it
+    {
+        int size = q.size();
+        if (size == 0)
+        {
+            return ans;
+        }
+        vector<int>data; //this will be created every time when the level in ended n new level created
+        while (size>0)
+        {
+            Node* temp = q.front();
+            q.pop();
+            data.push_back(temp->data);
+            if (temp->left != NULL)
+            {
+                q.push(temp->left);
+            }
+            if (temp->right != NULL)
+            {
+                q.push(temp->right);
+            }
+            size--;                         
+        }
+        ans.push_back(data); //ans is vector of vector so we can push a whole vector at once
+        
+    }
+    return ans;
+    
+    
+}
+
+
+//The idea behind top view is the node that are visible from the top
+//which we gonna do it it by horizontal distance
+// -2--- -1   0    1    2
+// -side is left and 0 is root and 1 or 2 is right side
+
+vector<int> topViewofTree(Node* root){
+   
+    vector<int> ans;
+    if (root == NULL)
+    {
+        return ans;
+    }
+    map<int, int> topNode; //isme hoga hd(horizontal distance and data)
+    queue<pair<Node*, int>> q; //queue m push krnge pair node or HD like 0 -1 or 1
+    
+    q.push(make_pair(root, 0));//Make pair is predefined qay to put key val is queue
+
+    while (!q.empty())
+    {
+        pair<Node*, int> temp = q.front(); //as we know in the queue we have store paired so
+        //the data type of the temp variable is also the pair by which we can store both the 
+        //root and its HD(horizontal distance)
+
+        q.pop();
+
+        //now we make seperate variable for both the pair so we can use accordingly
+        Node* frontNode = temp.first;
+        int hd = temp.second;
+
+        //If value is present then it will do nothing if not then below condintion will work
+        if (topNode.find(hd)==topNode.end()) //means nhi milti he the or iterative end tk pahuch gya
+        {
+            //its a map so
+            //key == value
+            topNode[hd] = frontNode->data;
+        }
+
+        if (frontNode->left) //Not != NULL
+        {
+            q.push(make_pair(frontNode->left, hd-1));//as we know as left it goes from the root -1 will add
+        }
+        if (frontNode->right) //Not != NULL
+        {
+            q.push(make_pair(frontNode->right, hd+1));//as we know as right it goes from the root +1 will add
+        }
+
+    }
+    for(auto x : topNode){
+        ans.push_back(x.second); //basically putting the vals to vector
+    }  
+
+}
+
+
+int main()
+{
+    Node* root = NULL;
+    root = buildTree(root);
+    // levelOrderTraversal(root);
+
+    cout<<"printing zigzag "<<endl;
+    
+
+
+
+
+
+    
+
+    return 0;
+}
+// 10 5 2 -1 -1 7 -1 -1 11 -1 -1 

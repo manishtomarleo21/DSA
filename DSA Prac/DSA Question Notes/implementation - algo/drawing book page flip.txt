@@ -1,0 +1,30 @@
+#include <set>
+#include <iostream>
+#include <algorithm>
+#include <map>
+
+
+
+using namespace std;
+
+
+
+
+int main()
+{
+
+   int n = 6;
+    int p = 3;
+    int front = p/2;
+    int back = n/2-p/2;
+
+  
+    cout<<front<<endl;
+    cout<<back<<endl;
+    // cout<<(front<back?front:back)<<endl;
+
+
+
+    
+    return 0;
+}

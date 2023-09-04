@@ -1,0 +1,66 @@
+#include<stdio.h>
+#include<stdlib.h>
+
+struct Node
+{
+    int data;
+    struct Node * left;
+    struct Node * right;
+};
+
+//FUnction for setting up the node
+struct Node * createNode(int data){
+    struct Node * n;
+    n = (struct Node *) malloc(sizeof(struct Node));
+
+    n->data = data;
+    n->left = NULL;
+    n->right = NULL;
+
+    return n;
+}
+
+//1. postOrderTraversal traversal Function for the traversal in llinked representation of the binary tree
+//left subtree ===>> right subtree ====>> root  this go in recursive way 
+void postOrderTraversal(struct Node * root){ //Passing a root node 
+
+    if (root!=NULL)
+    {
+        postOrderTraversal(root->left); //now it will do it for the subtree and left side tree will act like tree
+        postOrderTraversal(root->right);//and will brake it till its goes null;
+        printf("%d, ", root->data); //This is the oly diffrence from pre and post order traversal
+        //In preorder printf before recrsuive call 
+        //In postorder printf after recursive call
+    }
+    
+}
+
+
+int main()
+{
+    //Created all the nodes
+    struct Node * r = createNode(4);
+    struct Node * p1 = createNode(1);
+    struct Node * p2 = createNode(6);
+    struct Node * c1 = createNode(5);
+    struct Node * c2 = createNode(2);
+
+    //Linking the nodes just like the strucute below
+    r->left = p1;
+    r->right = p2;
+    p1->left = c1;
+    p1->right = c2;
+
+    //The structure of this binary tree will look like
+    /*
+        4
+      /  \
+     1    6
+    /  \ 
+   5   2
+    */
+
+   postOrderTraversal(r);
+    
+    return 0;
+}

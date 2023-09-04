@@ -1,0 +1,77 @@
+#include<stdio.h>
+
+void printArray(int *arr, int len)
+{
+    for (int i = 0; i < len; i++)
+    {
+        printf("%d, ", arr[i]);
+    }
+    printf("\n");
+}
+
+//its merge procedure which takes two sorted array and merge them in new array sorted
+// single arrray
+void merge(int arr[], int mid, int low, int high){
+    int i, j, k, newArr[15]; //creating a new array which we put tempory vals sorted fron two broke sub arrays
+    i = low;
+    j = mid+1;
+    k = low;
+
+    while (i <= mid && j <= high) //this conditio till both have equal elements
+    {
+        if (arr[i] < arr[j])
+        {
+            newArr[k] = arr[i];  //putting i value in newArray as i is smaall and moving one step up
+            i++;                //while j will remain at same index
+            k++;
+        }
+        else{
+            newArr[k] = arr[j]; //putting j value in newArray as j is smaall and moving one step up
+            j++; k++;          //while j will remain at same index
+        }
+        
+    }
+    while (i <= mid) //This check if i elements remain in the array and j;s over this will put rest elemetn in 
+    {                   //array same is going for the j elements
+        newArr[k] = arr[i];
+        i++;
+        k++;
+    }
+    while (j <= high)
+    {
+        newArr[k] = arr[j];
+        j++; k++;
+    }
+    for (int i = low; i < high; i++) //This loop is putting back all the values bavk in the original array
+    {
+        arr[i] = newArr[i];
+    }
+    
+    
+}
+
+
+//This function will give us mid and break the array into two sub arrays
+void mergeSort(int arr[], int low, int high){
+    int mid;
+    if (low < high)
+    {
+        mid = (low+high)/2; //getiing mid to divide an array in two part
+        mergeSort(arr, low, mid); //this will break the left array from mid in further part
+        mergeSort(arr, mid+1, high);//this will break the right array from mid in further part
+        merge(arr, mid, low, high);
+    }
+    
+}
+
+int main()
+{
+    int arr[] = {12, 15, 3, 65, 114, 64, 88, 73, 2, 2, 6, 6, 100};
+    int len = 13;
+
+    printArray(arr, len);
+    mergeSort(arr, 0, len - 1);
+    printArray(arr, len);
+
+    return 0;
+}

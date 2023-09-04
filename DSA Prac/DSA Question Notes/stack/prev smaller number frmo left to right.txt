@@ -1,0 +1,93 @@
+#include<iostream>
+#include<vector>
+#include<stack>
+
+using namespace std;
+
+//Prev smaller number 
+
+vector<int> PSE(vector<int> vec, int n){
+    vector<int>ans(n);
+    stack<int> st;
+    st.push(-1);
+
+   for (int i = 0; i < n ; i++)
+   {
+        int curr = vec[i];
+        while (curr<=st.top())
+        {
+            st.pop();
+        }
+        ans[i] = st.top();
+        st.push(curr);
+        
+   }
+   return ans;
+      
+}
+
+int main()
+{
+    vector<int> v = {2,1,4,3};
+    int n = v.size();
+
+
+    vector<int> pse = PSE(v, n);
+
+    for (int i = 0; i < n; i++)
+    {
+        cout<<v[i]<<" "<<pse[i]<<endl; 
+        
+    }
+    
+
+    return 0;
+}
+________________________________________|||||||||||||||||||||||||||||||||___________________________________________________
+//with the index
+
+#include<iostream>
+#include<vector>
+#include<stack>
+
+using namespace std;
+
+//Prev smaller number 
+
+vector<int> PSE(vector<int> vec, int n){
+    vector<int>ans(n);
+    stack<int> st;
+    st.push(-1);
+
+   for (int i = 0; i < n ; i++)
+   {
+        int curr = vec[i];
+        while (st.top()!=-1 && curr<=vec[st.top()])
+        {
+            st.pop();
+        }
+        ans[i] = st.top();
+        st.push(i);
+        
+   }
+   return ans;
+      
+}
+
+int main()
+{
+    vector<int> v = {2,1,4,3};
+    int n = v.size();
+
+
+    vector<int> pse = PSE(v, n);
+
+    for (int i = 0; i < n; i++)
+    {
+        cout<<v[i]<<" "<<(pse[i]==-1?-1:v[pse[i]])<<endl; 
+        
+    }
+    
+
+    return 0;
+}

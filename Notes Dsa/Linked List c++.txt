@@ -1,0 +1,80 @@
+#include<iostream>
+
+using namespace std;
+//Linked list with c++
+
+// create a node structure with the class
+class Node
+{
+    public:
+        int data;
+        Node * next;
+
+    Node(int data){
+        this->data = data;
+        this->next = NULL;
+    }
+};
+
+//Insertion at head //Refrence just to updat the original head not its copy that we use &refrence
+void insertionAtHead(Node* &head, int d){
+    Node * node2 = new Node(d);
+    node2->next = head;
+    head = node2;
+}
+
+void insertionAtTail(Node* &tail, int d){
+    Node * temp = new Node(d);
+    tail->next = temp;
+    tail = temp;
+}
+
+Node * insertAtIndex(Node* &head, int data, int index){
+    Node* ptr = new Node(data);
+    Node * p = head; //as we dont wanna lose original head;
+    int i =0;
+    while (i != index-1)//this way we will reach to befire the index we wanna put it
+    {
+        p = p->next;
+        i++;
+    }
+    ptr->next = p->next;
+    p->next = ptr;
+    return head;
+
+    
+}
+
+//printing the linked list
+void printLL(Node* &head){
+    Node * temp = head;
+    while (temp != NULL)
+    {
+        cout<<temp->data<<endl;
+        temp = temp->next;
+    }
+    
+    
+}
+
+
+int main()
+{
+    //created a node and allocatring the memory with the passing the arguments to constructor
+    Node * node1 = new Node(7);
+    Node * head = node1; //setting up the head
+    Node * tail = node1; //setting up the tail pointer
+
+    insertionAtHead(head, 11);
+    insertionAtHead(head, 15);
+
+    insertionAtTail(tail, 22);
+
+    insertAtIndex(head, 55, 1);
+    printLL(head);
+
+
+
+
+    return 0;
+}

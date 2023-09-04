@@ -1,0 +1,81 @@
+#include <cmath>
+#include <cstdio>
+#include <vector>
+#include <iostream>
+#include <algorithm>
+#include<queue>
+using namespace std;
+
+
+void levell(int source, vector<bool> &visited, vector<vector<int>> &graph1, vector<int> &level){
+    queue<int> q;
+    q.push(source);
+    visited[source] = true;
+    level[source] = 0;
+    while (!q.empty())
+    {
+        int curr_vert = q.front();
+        q.pop();
+
+        for(int child : graph1[curr_vert]){
+            if(!visited[child]){
+                q.push(child);
+                visited[child] = true;
+                level[child] = level[curr_vert]+6;
+            }
+        }
+    }
+    
+}
+
+vector<int> bfs(int n, int m, vector<vector<int>> edges, int s) {
+    vector<bool> visited(n+1, 0);
+    vector<int> level(n+1, -1);
+
+    vector<vector<int>> graph1(n+1);
+
+    for (int i = 0; i < m; i++)
+    {
+        graph1[edges[i][0]].push_back(edges[i][1]);
+        graph1[edges[i][1]].push_back(edges[i][0]);
+    }
+
+    // for(int i = 1;i <=n; i++){
+    //     // if(graph1[i].size()>0 && !visited[i]){
+    //     //     levell(i, visited, graph1, level);
+    //     // }
+    //     if(graph1[i].size()==0) level[i] = -1;
+    // }
+
+    levell(s, visited, graph1, level);
+
+    level.erase(level.begin()+s);
+    level.erase(level.begin());
+
+     for(int i = 0; i<level.size(); i++){
+
+        // if(level[i]!=-1) 
+        cout<<level[i]<<" ";
+      
+    }
+
+    return level;
+    
+}
+
+
+int main() {
+
+    int n = 4, m =2;
+    // vector<vector<int>> astronaut = {{2, 3}};
+    vector<vector<int>> astronaut = {{1, 2}, {1, 3}};
+    // vector<vector<int>> astronaut = {{3, 1}, {10, 1}, {10, 1}, {3, 1}, {1, 8}, {5, 2}};
+
+    vector<int> ans = bfs(n, m, astronaut, 1);
+
+   
+   
+    
+
+    return 0;
+}

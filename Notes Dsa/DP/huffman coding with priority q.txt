@@ -1,0 +1,95 @@
+#include<bits/stdc++.h>
+
+
+using namespace std;
+
+//Huffman tree node
+struct MinHeapNode
+{
+    char data;
+    int freq;
+
+    MinHeapNode* left;
+    MinHeapNode* right;
+
+    MinHeapNode(char data, int freq){
+        left = NULL;
+        right = NULL;
+        this->data = data;
+        this->freq = freq;
+    }
+};
+
+//For comparision of two nodes
+struct compare{
+    bool operator()(MinHeapNode* l, MinHeapNode* r){
+        return(l->freq>r->freq);
+    }
+};
+
+// print huffman codes
+void printCodes(struct MinHeapNode* root, string str){
+    //if root is null then return.
+    if(!root){
+        return;
+    }
+
+    //if the node's data is not $ that means its not an internal node and print the string
+    if(root->data != '$'){
+        cout<<root->data<<": "<<str<<endl;
+    }
+
+    printCodes(root->left, str+"0");
+    printCodes(root->right, str+"1");
+
+} 
+
+void HuffmanCodes(char data[], int freq[], int size){
+    struct MinHeapNode *left, *right, *top;
+
+    //create a min heap
+    priority_queue<MinHeapNode*, vector<MinHeapNode*>, greater<MinHeapNode*>> minheap;
+
+    //for each character create a leaf node and insert each leaf node in the heap
+
+    for (int i = 0; i < size; i++)
+    {
+        minheap.push(new MinHeapNode(data[i], freq[i]));
+    }
+    
+
+    //Iterate while size of the min heap doesn't become one
+    while (minheap.size()!=1)
+    {
+        left = minheap.top();
+        minheap.pop();
+
+        right = minheap.top();
+        minheap.pop();
+
+        //create a new internal node haaving frequnecy equal to the sum of two extracted node as left
+        //and right children of this new node. Add this node to the heap.
+
+        top = new MinHeapNode('$', left->freq+right->freq);
+        top->left = left;
+        top->right = right;
+
+        minheap.push(top);
+    }
+    //Calling function to print the codes.
+    printCodes(minheap.top(), " ");
+}
+
+
+
+
+int main()
+{
+    char arr[] = {'a', 'b', 'c', 'd', 'e'};
+    int freq[] = {10, 5, 2, 14, 15};
+
+    int size = 5;
+    HuffmanCodes(arr, freq, size);
+
+    return 0;
+}

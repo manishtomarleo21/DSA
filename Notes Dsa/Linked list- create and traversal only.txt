@@ -1,0 +1,48 @@
+#include<stdio.h>
+#include<stdlib.h>
+
+//create struct for the linked list 
+struct Node
+{
+    int data;
+    struct Node * next; //This is called SELF REFRENCING STRUCT POINTER TO POINT THE NEXT NODES
+};
+
+void linkedListTraversal(struct Node * ptr){
+
+    while (ptr!=NULL)
+    {
+        printf("%d ", ptr->data);
+        ptr = ptr->next; //This will update everytime loop get runs to next address of list like head then second third
+    }
+}
+
+int main()
+{
+    struct Node  * head;
+    struct Node  * second;
+    struct Node  * third;
+
+    //allocating memory for the nodes in the linked lists in heap
+    head = (struct Node *) malloc(sizeof(struct Node));
+    second = (struct Node *) malloc(sizeof(struct Node));
+    third = (struct Node *) malloc(sizeof(struct Node));
+
+    //Linking head node to second node
+    (*head).data = 7; //We can also use the arraow operator for derefrencing
+    head->next = second; //holds the address of the second liked list or array
+
+    //Linking second node to third node
+    second->data = 11;
+    second->next = third;
+
+    //Termintaing the linked list
+    third->data = 15;
+    third->next = NULL;
+
+    //Caliing the fuction to run to traversal through the linked lists
+    linkedListTraversal(head);
+
+
+    return 0;
+}

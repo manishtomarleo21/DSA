@@ -1,0 +1,171 @@
+//class Node user defined
+class Node{
+
+    constructor(element){
+        this.element = element
+        this.next = null
+    }
+}
+
+// Linked list class
+class LinkedList{
+    constructor(){
+        this.head = null
+        this.size = 0
+    }
+
+    add(element){
+        let node = new Node(element);
+
+        let current;
+
+        // if this list is empty
+        if(this.head == null){
+            this.head = node;
+        }
+        else{
+            current = this.head;
+
+            //iterate to end of the list
+            while (current.next) {
+                current = current.next;
+            }
+            //adding node in the list
+            current.next = node;
+
+        }
+        this.size++;
+    }
+
+    insertAtelem(element, index){
+        if(index < 0 || index > this.size){
+            return console.log("Please enter a valid index.");
+        }
+        else{
+            //create a new node
+            let node = new Node (element);
+            let curr, prev;
+
+            curr = this.head;
+
+            //add element at first index
+            if(index == 0){
+                node.next = this.head;
+                this.head = node;
+            }else{
+                curr = this.head;
+                let i = 0;
+
+                while (i < index) {
+                    prev = curr;
+                    curr = curr.next;
+                    i++;
+                }
+                node.next = curr;
+                prev.next = node;
+            }
+            this.size++;    
+        }
+
+    }
+    removeFromIndex(index){
+        if(index < 0 || index >= this.size){
+            return console.log("Please Enter a valid index");
+        }
+        else{
+            let curr, prev, i = 0;
+            curr = this.head
+            prev = curr;
+
+            if(index == 0 ){
+                this.head = curr.next
+            }else{
+                while (i < index) {
+                    prev = curr;
+                    curr= curr.next;
+                    i++;
+                }
+                prev.next = curr.next
+            }
+            this.size--;
+            return curr.element;
+        }
+    }
+
+    removeElement(element){
+        let curr = this.head
+        let prev = null
+
+        while (curr!=null) {
+            
+            if(curr.element === element){
+                if(prev == null){
+                    this.head = curr.next
+                }else{
+                    prev.next = curr.next
+                }
+                this.size--;
+                return curr.element;
+            }
+            prev = curr;
+            curr = curr.next
+        }
+        return -1;
+    }
+
+    indexof(element){
+        let count = 0;
+        let curr = this.head;
+
+        while (curr!=null) {
+            if(curr.element = element){
+                return count;
+            }
+            count++;
+            curr = curr.next;
+        }
+        return -1
+    }
+
+    isEmpty(){
+        return this.size == 0;
+    }
+
+    size_of_list(){
+        console.log(this.size);
+    }
+
+    printlist(){
+        let curr = this.head;
+        let str = "";
+
+        while (curr) {
+            str+= curr.element + " "
+            curr = curr.next;
+        }
+        console.log(str);
+    }
+}
+
+
+
+let linkl = new LinkedList();
+
+console.log(linkl.isEmpty());
+
+//addint element to the linked list
+
+linkl.add(7)
+linkl.add(14)
+linkl.add(21)
+linkl.add(28)
+
+linkl.printlist();
+
+console.log(linkl.size_of_list());
+
+linkl.insertAtelem(60, 2)
+
+linkl.printlist();
+console.log(linkl.removeFromIndex(3));
+linkl.printlist();

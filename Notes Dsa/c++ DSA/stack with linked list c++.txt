@@ -1,0 +1,109 @@
+#include <iostream>
+
+using namespace std;
+
+class Node
+{
+    public:
+    int data;
+    Node * next;
+    Node(){
+        next = NULL;
+    }
+
+};
+
+int isFull(Node* top){
+    Node* ptr = new Node();
+    if(ptr == NULL){
+        cout<<"Stack Overflow.\n";
+        return 1;
+    }else{
+        return 0;
+    }
+}
+
+int isEmpty(Node* top){
+     if(top == NULL){
+        cout<<"Stack underflow.\n";
+        return 1;
+    }
+    else{
+        return 0;
+    }
+}
+
+Node* push(Node* top, int val){
+    Node* ptr = new Node();
+    if(ptr == NULL){
+        return ptr;
+    }
+    else{
+        ptr->data = val;
+        ptr->next = top;
+        top = ptr;
+        return top;
+    }
+
+}
+
+int pop(Node** top){
+    if(isEmpty(*top)){
+        cout<<"Stack underflow.\n";
+        return 1;
+    }
+    else{
+        Node* ptr = *top;
+        *top = (*top)->next;
+        int val = ptr->data;
+        free(ptr);
+        return val;
+    }
+}
+
+
+void stackTraversal(Node* top){
+    Node* ptr = top;
+    while (ptr!=NULL)
+    {
+        cout<<ptr->data<<" ";
+        ptr = ptr->next;
+    }
+    
+}
+
+int stackTop(Node* top){
+    return top->data;
+}
+
+int stackBottom(Node* top){
+    Node* ptr = top;
+    while (ptr->next!=NULL)
+    {
+        ptr = ptr->next;
+    }
+    return ptr->data;
+    
+}
+
+
+int main()
+{
+    Node* top = NULL;
+    top = push(top, 7);
+    top = push(top, 14);
+    top = push(top, 21);
+    top = push(top, 28);
+
+    cout<<isEmpty(top)<<endl;
+    cout<<isFull(top)<<endl;
+
+    // cout<<pop(&top)<<endl;
+    // stackTraversal(top);
+
+    cout<<stackTop(top)<<endl;
+    cout<<stackBottom(top)<<endl;
+
+
+    return 0;
+}

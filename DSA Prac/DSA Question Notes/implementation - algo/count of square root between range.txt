@@ -1,0 +1,45 @@
+#include <set>
+#include <iostream>
+#include <algorithm>
+#include <bits/stdc++.h>
+#include <queue>
+#include <cstring>
+#include <string>
+
+using namespace std;
+
+int main()
+{
+  
+  int a = 24;
+  int b = 49;
+
+
+  //mathod one to find out the square number between the range
+  int x =  ceil(sqrt(a)); //a val will be the ceil if not perfect square
+  int y = floor(sqrt(b)); //b val will be floored if not perfect square
+
+  int res = (y-x)+1; //this the formula diffrence +1 will tell tjhe number of square vals in between
+  cout<<res<<endl;
+
+
+
+  //this is longer method will count the square and do all the calculation till its findthe number of
+  //square in ranges
+  int sqr = 1, count = 0, num = 1;
+
+  while (sqr<=b)
+  {
+    if(sqr>= a && sqr <= b) count++;
+
+    num++;
+    sqr = num*num;
+  }
+
+  cout<<count<<endl;
+   
+
+
+
+    return 0;
+}

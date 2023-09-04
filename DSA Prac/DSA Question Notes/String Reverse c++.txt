@@ -1,0 +1,81 @@
+#include<iostream>
+#include<string>
+
+using namespace std;
+
+string reverseStr(string str1){ //Here declaring the function
+    char temp; //created a temporary variabel 
+    int len = str1.length(); //len of the string
+
+    for (int i = 0; i < len/2; i++) //we run the loop half time to reverse the string like 1-6 2-5 3-4 
+    {
+        temp = str1[i]; //here temp will hold str[1] index
+        str1[i] = str1[len-i-1]; // here str[1] will hold str[last index] like 6
+        str1[len-i-1] = temp; //here str[last index] hold 1 temp character 
+                                //This way in half run all the string will be reversed
+    }
+    return str1;
+    
+}
+
+//With pointer that will change the original str 
+
+void reverseStr(char * str1){
+    char temp;
+    int count;
+
+    //To get the length of the str
+    while (str1[count] != '\0')
+    {
+        count++;
+    }
+
+    //now loop to exchange from last to first and second to second last 
+    //loop will run half otherwise it will get back to original state 
+    for (int i = 0; i < count/2; i++)
+    {
+        temp = str1[i];
+        str1[i] = str1[count - i - 1];
+        str1[count - i - 1] = temp;
+    }
+    
+    
+}
+
+int main()
+{
+    string str; //Black var to store the str
+
+    getline(cin, str); //getsline takes the input with spaces which cin cant 
+    
+    cout<<"Printing before the reversing the string"<<endl;
+    cout<<str<<endl;
+
+    // reverseStr(str); 
+    cout<<"After reversing the string"<<endl;
+    cout<<reverseStr(str)<<endl; //here calling the function which is returnig the string
+
+    return 0;
+}
+
+//Alternate for character pointer function main
+
+//Function that return the string 
+
+
+int main(int argc, char const *argv[])
+{
+
+
+    char str[15];
+
+    cout<<"Enter the string to reverse\n";
+    gets(str); //To get the string from the user
+
+    reverseStr(str); //A function which will change the original str
+
+    cout<<"The string after reversal\n";
+    puts(str); //To print the array or string basically a character array
+    return 0;
+}
+

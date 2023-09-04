@@ -1,0 +1,43 @@
+#include <iostream>
+
+using namespace std;
+
+bool checker(string s1, string s2)
+{
+    string s3 = s1 + s1;  //first we concatenate to check the rotation of the words like abcde cdeab so we can see
+    int len = s1.length();                    //that abcdeabcde  we can finde cdeab is this
+    int lenOfF = s2.length();
+    int lens3 = s3.length();
+    // cout<<lens3<<endl;
+
+    if (len != lenOfF)
+    {
+        cout << "Not Found" << endl;
+        return 0;
+    }
+
+    if (s3.find(s2)!=string::npos) //find funtion gives the position so incase and no position gives string no
+    {                              //no position so its saing if not equal to no position then its correct -1
+        cout<<"YES"<<endl;
+        cout<<s3.find(s2)<<endl;
+        return true;
+    }
+    else{
+        cout << "Not Found" << endl;
+        return false;
+
+    }
+
+
+
+}
+int main()
+{
+    string s = "GeeksForGeeks";
+    string x = "ForGeeksGeeks";
+
+    bool elem = checker(s, x);
+    cout << elem << endl;
+
+    return 0;
+}

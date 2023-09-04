@@ -1,0 +1,56 @@
+#include <bits/stdc++.h>
+
+using namespace std;
+
+
+
+int main()
+{
+   int n;
+   cin>>n;
+   cin.ignore();
+
+    string queryline;
+    int query, data;
+    
+    stack<int> stackMax;
+
+   for (int i = 0; i < n; i++)
+   {
+        getline(cin, queryline);
+        istringstream ss(queryline);  // by this two i can conver "1 97" into  two seprated integers 1 & 97
+        ss>>query>>data;  
+
+        switch (query)
+        {
+        case 1:
+           if (stackMax.empty())
+           {
+                stackMax.push(data);
+           }
+           else{
+                stackMax.push(max(stackMax.top(), data));
+           }
+
+            break;
+        
+        case 2: 
+            if (!stackMax.empty())
+            {
+                stackMax.pop();   
+            }
+            break;
+        case 3:
+            cout<<stackMax.top()<<endl;
+            break;
+
+        default:
+            break;
+
+        }
+        
+   }
+   
+
+    
+}

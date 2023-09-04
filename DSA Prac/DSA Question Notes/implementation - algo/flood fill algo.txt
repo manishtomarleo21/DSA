@@ -1,0 +1,75 @@
+#include<iostream>
+#include<map>
+#include <unordered_map>
+#include<vector>
+#include <numeric>
+#include <set>
+#include <algorithm>
+
+using namespace std;
+
+void floodFill(vector<vector<int>>& screen, int sRow, int sCol, int row, int col, int oldColor, int newColor){
+    //conditions to checing out the bounds
+    if(sRow < 0 || sCol < 0 || sRow >= row || sCol >= col) return;
+
+    //to avoid the infinte recursion 
+    if(screen[sRow][sCol]==newColor) return;
+    if(screen[sRow][sCol]!=oldColor) return;
+
+    screen[sRow][sCol] = newColor;
+    floodFill(screen, sRow-1, sCol, row, col, oldColor, newColor);
+    floodFill(screen, sRow+1, sCol, row, col, oldColor, newColor);
+    floodFill(screen, sRow, sCol-1, row, col, oldColor, newColor);
+    floodFill(screen, sRow, sCol+1, row, col, oldColor, newColor);
+}
+
+
+int main()
+{
+
+    vector<vector<int> > screen
+        = { { 1, 1, 1, 1, 1, 1, 1, 1 },
+            { 1, 1, 1, 1, 1, 1, 0, 0 },
+            { 1, 0, 0, 1, 1, 0, 1, 1 },
+            { 1, 2, 2, 2, 2, 0, 1, 0 },
+            { 1, 1, 1, 2, 2, 0, 1, 0 },
+            { 1, 1, 1, 2, 2, 2, 2, 0 },
+            { 1, 1, 1, 1, 1, 2, 1, 1 },
+            { 1, 1, 1, 1, 1, 2, 2, 1 } };
+
+    int row = screen.size();
+    int col = screen[0].size();
+
+    //given coordinates from where we have to start the filling
+    int x = 4, y = 4;
+
+    //currnt color at the co-ordinate which we gonna replace
+    int oldColor = screen[x][y];
+
+    //new color which we gonna replace
+    int newColor = 3;
+
+    //creating a function
+    floodFill(screen, x,y, row, col, oldColor, newColor);
+
+    for(auto row : screen){
+        for(int num: row) cout<<num<<" ";
+        cout<<endl;
+    }
+
+    return 0;
+}
+
+/*
+output
+1 1 1 1 1 1 1 1 
+1 1 1 1 1 1 0 0 
+1 0 0 1 1 0 1 1 
+1 3 3 3 3 0 1 0 
+1 1 1 3 3 0 1 0 
+1 1 1 3 3 3 3 0 
+1 1 1 1 1 3 1 1 
+1 1 1 1 1 3 3 1 
+
+
+*/

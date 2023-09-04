@@ -1,0 +1,106 @@
+#include<stdio.h>
+#include<stdlib.h>
+
+
+struct Node
+{
+    int data;
+    struct Node * left;
+    struct Node * right;
+};
+
+struct Node * createNode(int data){
+    struct Node * n;
+    n = (struct Node *) malloc(sizeof(struct Node));
+
+    n->data = data;
+    n->left = NULL;
+    n->right = NULL;
+
+    return n;
+}
+
+void inOrderTraversal(struct Node * root){
+    if (root!=NULL)
+    {
+        inOrderTraversal(root->left);
+        printf("%d, ", root->data);
+        inOrderTraversal(root->right);
+    }
+    
+}
+
+int isBST(struct Node * root){
+    static struct Node * prev = NULL;
+    if (root!=NULL)
+    {
+        if (!isBST(root->left))
+        {
+            return 0;
+        }
+        if (prev!=NULL && root->data <= prev->data)
+        {
+            return 0;
+        }
+        prev = root;
+        return isBST(root->right);        
+    }
+    else{
+        return 1;
+    }
+    
+}
+
+struct Node * searchBST(struct Node * root, int key){
+    if (root == NULL)
+    {
+        return NULL;
+    }
+    if (root->data == key)
+    {
+        return root;
+    }
+    
+    else if (root->data > key)
+    {
+        return searchBST(root->left, key);
+    }
+    else{
+        return searchBST(root->right, key);
+    }
+    
+    
+}
+
+int main()
+{
+    struct Node * r = createNode(4);
+    struct Node * p1 = createNode(2);
+    struct Node * p2 = createNode(5);
+    struct Node * c1 = createNode(1);
+    struct Node * c2 = createNode(3);
+   
+
+    r->left = p1;
+    r->right = p2;
+    p1->left = c1;
+    p1->right = c2;
+
+    inOrderTraversal(r);
+    printf("\n");
+    printf("%d\n", isBST(r));
+
+    //This will return struct pointer to save it we have to store in it
+    struct Node * found = searchBST(r, 5);
+    if (found!=NULL)
+    {
+        printf("%d\n ", found->data);      
+    }
+    else{
+        printf("Element not found.\n"); 
+    }
+    
+
+    return 0;
+
+}

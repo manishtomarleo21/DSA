@@ -1,0 +1,42 @@
+#include <iostream>
+#include <iomanip> 
+
+
+
+using namespace std;
+
+
+
+int main()
+{
+   
+   int user;
+   cin>>user;
+
+   while (user--)
+   {
+        double a;
+        double b;
+        double c;
+
+        cin>>a>>b>>c;
+
+        cout<<hex << left << showbase << nouppercase;
+        cout<< (long long) a<<endl;
+
+        cout.width(15);
+        cout.fill('_');
+        cout<<fixed<<setprecision(2)<<showpos<<noshowbase<<right; 
+        cout<<b<<endl;
+
+        cout.width(0);
+        cout<<fixed<<setprecision(9)<<scientific<<noshowpos<<uppercase;
+        cout<<c<<endl;
+
+   }
+   
+//    100.345 2006.008 2331.41592653498
+
+
+    return 0;
+}

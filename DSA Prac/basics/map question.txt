@@ -1,0 +1,70 @@
+#include<iostream>
+#include <map>
+#include <vector>
+
+using namespace std;
+
+int main()
+{
+    int q, y, cond;
+    string x;
+    cin>>q;
+
+    vector<int> vec1;
+    
+
+    map<string, int> studs; 
+
+    while (q--)
+    {   
+       cin>> cond;
+       switch (cond)
+       {
+       case 1:
+        cin>>x>>y;
+        studs[x] += y;       
+        break;
+
+        case 2:
+        cin>>x;
+        studs.erase(x);
+        break;
+
+        case 3:
+        cin>>x;
+        auto it = studs.find(x);
+        // it != studs.end()?cout<<(it->second)<<endl:cout<<0;
+        it != studs.end()?vec1.push_back(it->second):vec1.push_back(0);
+        
+        break;
+       
+       }
+    }
+
+    for(auto val : vec1){
+        cout<<val<<endl;
+    }
+    
+    
+/*
+
+7
+1 Jesse 20
+1 Jess 12
+1 Jess 18
+3 Jess
+3 Jesse
+2 Jess
+3 Jess
+
+
+output 30
+20
+0
+
+*/
+
+
+
+    return 0;
+}

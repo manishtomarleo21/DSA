@@ -1,0 +1,61 @@
+#include <cmath>
+#include <cstdio>
+#include <vector>
+#include <iostream>
+#include <algorithm>
+#include <queue>
+using namespace std;
+
+//in this we used to DP which is why saving the moved towrds zero in an array if the subproblems comes agian
+// we wont save it in DParray(dynamic)
+
+int downToZero(int n){
+    queue<int> q;
+    int dP[100001] = {0}; //create a 10^6 array basically i earsed one zero otherwise not running
+
+    q.push(n); //pushed first element which is given 
+
+    while (!q.empty())
+    {
+        int currNum = q.front();
+        q.pop();
+
+        if (currNum == 0)
+        {
+            break;
+        }
+
+        if (dP[currNum-1]==0)
+        {
+            q.push(currNum-1);
+            dP[currNum-1] = dP[currNum]+1;
+        }
+
+        for (int i = sqrt(currNum); i >= 2; i--)
+        {
+            if(currNum%i == 0 && dP[currNum/i]==0){
+                q.push(currNum/i);
+                dP[currNum/i] = dP[currNum]+1;
+            }
+        }
+        
+        
+        
+    }
+    return dP[0];
+    
+
+}
+
+
+int main()
+{
+   
+    int n = 6;
+    cout<<downToZero(n)<<endl;
+
+    
+
+    return 0;
+}
+

@@ -1,0 +1,234 @@
+#include<iostream>
+#include<queue>
+#include<algorithm>
+
+using namespace std;
+
+class Node
+{
+    public:
+        int data;
+        Node* left;
+        Node* right;
+        Node(int d){
+            this->data = d;
+            this->left = NULL;
+            this->right = right;
+        }
+};
+
+
+Node* buildTree(Node* root){
+    cout<<"Enter the data: "<<endl;
+    int data;
+    cin>>data;
+
+    root = new Node(data);
+
+    if (data == -1)
+    {
+        return NULL;
+    }
+    else{
+        cout<<"Enter the data for left of  "<<root->data<<endl;
+        root->left = buildTree(root->left);
+
+        cout<<"Enter the data for right of  "<<root->data<<endl;
+        root->right = buildTree(root->right);
+
+    }
+    return root;
+}
+
+vector<vector<int>> advLvel(Node* root){ // for pracitce i wrote again  below is the same func of level 
+    vector<vector<int>> ans;
+    queue<Node*> q;
+    if (root == NULL)
+    {
+        return ans;
+    }
+    q.push(root);
+
+    while (1)
+    {
+        int size = q.size();
+        if (size == 0)
+        {
+            return ans;
+        }
+        vector<int> data;
+        while (size>0)
+        {
+            Node* temp = q.front();
+            q.pop();
+
+            data.push_back(temp->data);
+            if (temp->left !=NULL)
+            {
+                q.push(temp->left);
+            }
+            if (temp->right !=NULL)
+            {
+                q.push(temp->right);
+            }
+            size--;    
+        }
+        ans.push_back(data); //this will put in level by level like 10 then endl then 15 12 and theur child
+        
+    }
+    return ans;
+    
+    
+}
+
+    
+void levelOrderTraversal(Node* root){
+    if (root == NULL)
+    {
+        return;
+    }
+    queue<Node*>q;
+    q.push(root);
+    
+    
+    while (!q.empty())
+    {
+        Node* temp = q.front();
+        cout<<temp->data<<" ";
+        q.pop();
+
+        if(temp->left!=NULL){
+            q.push(temp->left);
+        }
+        if(temp->right!=NULL){
+            q.push(temp->right);
+        }
+    }
+    
+
+    
+
+}
+
+vector<vector<int>> levelOrderTraversalAdv(Node* root){
+    vector<vector<int>> ans;
+    queue<Node*> q;
+    q.push(root);
+
+    if (root == NULL)
+    {
+        return ans;
+    }
+    while (1) //basically infite loop but we will put a condition to break it
+    {
+        int size = q.size();
+        if (size == 0)
+        {
+            return ans;
+        }
+        vector<int>data; //this will be created every time when the level in ended n new level created
+        while (size>0)
+        {
+            Node* temp = q.front();
+            q.pop();
+            data.push_back(temp->data);
+            if (temp->left != NULL)
+            {
+                q.push(temp->left);
+            }
+            if (temp->right != NULL)
+            {
+                q.push(temp->right);
+            }
+            size--;                         
+        }
+        ans.push_back(data); //ans is vector of vector so we can push a whole vector at once
+        
+    }
+    return ans;
+    
+    
+}
+
+
+
+//Also called spiral traversal from left to righ nodes of the level
+//its done with advence level traversal vector of vector
+vector<vector<int>> zigZagTraversal(Node* root){
+   
+   vector<vector<int>> ans;
+   queue<Node*> q;
+   if (root == NULL)
+   {
+    return ans;
+   }
+
+   q.push(root);
+   int count = 0; //We use this to check level coz every even number the zig zag traversal print in right to left
+   //in every odd left to right
+   while (1)
+   {
+        int size = q.size();
+        if (size == 0)
+        {
+            return ans;
+        }
+        count++;
+        vector<int>data;
+        while (size>0)
+        {
+            Node* temp = q.front();
+            q.pop();
+            data.push_back(temp->data);
+
+            if (temp->left != NULL)
+            {
+                q.push(temp->left);
+            }
+            if (temp->right != NULL)
+            {
+                q.push(temp->right);
+            }
+            size--;
+        }
+        //for zig zag and wanna preint every alternate level in righr to left
+        if (count%2 == 0)
+        {
+            reverse(data.begin(), data.end()); //its an algorith head file
+        } 
+        ans.push_back(data);
+        
+   }
+   return ans;
+
+    
+}
+
+
+int main()
+{
+    Node* root = NULL;
+    root = buildTree(root);
+    // levelOrderTraversal(root);
+
+    cout<<"printing zigzag "<<endl;
+    vector<vector<int>> vec1 = zigZagTraversal(root);
+
+    for (int i = 0; i < vec1.size(); i++)
+    {
+        for (int j = 0; j < vec1[i].size(); j++)
+        {
+            cout << vec1[i][j] << " ";
+        }    
+        cout << endl;
+    }
+
+
+
+
+
+    
+
+    return 0;
+}
+// 10 5 2 -1 -1 7 -1 -1 11 -1 -1 
